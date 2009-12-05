@@ -3,6 +3,7 @@
 This is Nexus Personal Edition, a "hobby" project of mine, based on Nexus OSS Core, chopped with some not needed features, and added some new ones.  Targeted for "personal" setups, usually on same workstation where developer works.
 
 WWW: https://docs.sonatype.org/display/Nexus/NexusPEED
+
 Issue tracking: none yet
 
 This Git repository is mirrored from Sonatype Nexus OSS SVN, and 
@@ -28,5 +29,5 @@ So, the setup is similar, we have the following branches:
 * master - this is where work is, and *rebase* happens regularly (done manually, not cron-ed like Bob did!)
 
 
-Have fun!
+Have fun!   
 ~t~
