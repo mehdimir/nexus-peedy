@@ -1,6 +1,6 @@
-# NexusPEED
+# NexuSPEEDY
 
-This is Nexus Personal Edition, a "hobby" project of mine, based on Nexus OSS Core, chopped with some not needed features, and added some new ones.  Targeted for "personal" setups, usually on same workstation where developer works.
+This is Nexus Personal Edition (or Nexus speedy), a "hobby" project of mine, based on Nexus OSS Core, chopped with some not needed features, and added some new ones.  Targeted for "personal" setups, usually on same workstation where developer works.
 
 WWW: https://docs.sonatype.org/display/Nexus/NexusPEED
 

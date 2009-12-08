@@ -49,10 +49,6 @@
       <groupId>org.sonatype.plexus.appevents</groupId>
       <artifactId>plexus-app-events-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.sonatype.plexus.appevents</groupId>
-      <artifactId>simple-event-multicaster</artifactId>
-    </dependency>
     <!-- Logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -65,38 +61,20 @@
     </dependency>
     <!-- Local and remote storage techs -->
     <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty-client</artifactId>
-    </dependency>
-    <!-- DEPRECATED, WILL BE REPLACED BY JETTY CLIENT :: START vvv -->
-    <dependency>
       <groupId>commons-httpclient</groupId>
       <artifactId>commons-httpclient</artifactId>
     </dependency>
-    <!-- DEPRECATED, WILL BE REPLACED BY JETTY CLIENT :: END ^^^ -->
-    <dependency>
-      <groupId>org.sonatype.spice</groupId>
-      <artifactId>plexus-ehcache</artifactId>
-    </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
-      <artifactId>ehcache</artifactId>
+      <artifactId>ehcache-core</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jsecurity</groupId>
-      <artifactId>jsecurity</artifactId>
-    </dependency>
-    <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
     </dependency>
     <dependency>
       <groupId>commons-codec</groupId>
@@ -134,7 +112,13 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>${slf4j.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonatype.plexus.appevents</groupId>
+      <artifactId>simple-event-multicaster</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

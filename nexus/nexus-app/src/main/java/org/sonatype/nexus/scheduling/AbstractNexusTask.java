@@ -21,18 +21,14 @@ import org.codehaus.plexus.PlexusContainer;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
-import org.jsecurity.subject.SimplePrincipalCollection;
-import org.jsecurity.subject.Subject;
-import org.jsecurity.util.ThreadContext;
 import org.sonatype.nexus.Nexus;
 import org.sonatype.nexus.error.reporting.ErrorReportRequest;
 import org.sonatype.nexus.error.reporting.ErrorReportingManager;
 import org.sonatype.nexus.feeds.SystemProcess;
+import org.sonatype.plexus.appevents.ApplicationEventMulticaster;
 import org.sonatype.scheduling.ScheduledTask;
 import org.sonatype.scheduling.TaskExecutionException;
 import org.sonatype.scheduling.TaskState;
-import org.sonatype.security.SecuritySystem;
-import org.sonatype.plexus.appevents.ApplicationEventMulticaster;
 
 public abstract class AbstractNexusTask<T>
     extends AbstractLogEnabled
@@ -48,9 +44,6 @@ public abstract class AbstractNexusTask<T>
     
     @Requirement
     private ApplicationEventMulticaster applicationEventMulticaster;
-
-    @Requirement
-    private SecuritySystem securitySystem;
     
     // DO NOT, EVER AGAIN ADD @REQ here, since you will introduce a cycle
     // Look below, nexus is looked up "lazily"
@@ -185,8 +178,8 @@ public abstract class AbstractNexusTask<T>
 
 //        Subject subject = this.securitySystem.runAs( new SimplePrincipalCollection("admin", "") );
         // TODO: do the above instead
-        Subject subject = new TaskSecuritySubject();
-        ThreadContext.bind( subject );
+        //Subject subject = new TaskSecuritySubject();
+        //ThreadContext.bind( subject );
         try
         {
             result = doRun();
@@ -227,7 +220,7 @@ public abstract class AbstractNexusTask<T>
         }
         finally
         {
-            subject.logout();
+            //subject.logout();
         }
     }
 

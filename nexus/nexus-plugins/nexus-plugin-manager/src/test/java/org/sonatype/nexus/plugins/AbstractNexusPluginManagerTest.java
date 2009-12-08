@@ -59,8 +59,7 @@ public abstract class AbstractNexusPluginManagerTest
         config.setRealm( plexusCoreRealm );
 
         config.setComponentRepository( (ComponentRepository) config.getContext().get(
-                                                                                      ComponentRepository.class
-                                                                                          .getName() ) );
+            ComponentRepository.class.getName() ) );
     }
 
     protected void setUp()

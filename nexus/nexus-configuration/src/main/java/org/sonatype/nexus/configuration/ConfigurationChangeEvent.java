@@ -16,7 +16,6 @@ package org.sonatype.nexus.configuration;
 import java.util.Collection;
 import java.util.Collections;
 
-import org.jsecurity.subject.Subject;
 import org.sonatype.nexus.configuration.application.ApplicationConfiguration;
 
 /**
@@ -31,10 +30,7 @@ public class ConfigurationChangeEvent
 {
     private final Collection<Configurable> changes;
 
-    private final Subject subject;
-
-    public ConfigurationChangeEvent( ApplicationConfiguration configuration, Collection<Configurable> changes,
-        Subject subject )
+    public ConfigurationChangeEvent( ApplicationConfiguration configuration, Collection<Configurable> changes )
     {
         super( configuration );
 
@@ -44,17 +40,10 @@ public class ConfigurationChangeEvent
         }
 
         this.changes = Collections.unmodifiableCollection( changes );
-
-        this.subject = subject;
     }
 
     public Collection<Configurable> getChanges()
     {
         return changes;
-    }
-
-    public Subject getSubject()
-    {
-        return subject;
     }
 }

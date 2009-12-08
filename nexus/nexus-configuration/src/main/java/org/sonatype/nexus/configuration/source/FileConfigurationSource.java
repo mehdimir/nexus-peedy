@@ -33,7 +33,6 @@ import org.sonatype.nexus.configuration.model.ConfigurationHelper;
 import org.sonatype.nexus.configuration.validator.ApplicationConfigurationValidator;
 import org.sonatype.nexus.configuration.validator.ConfigurationValidator;
 import org.sonatype.plexus.appevents.ApplicationEventMulticaster;
-import org.sonatype.security.events.SecurityConfigurationChangedEvent;
 
 /**
  * The default configuration source powered by Modello. It will try to load configuration, upgrade if needed and
@@ -171,7 +170,7 @@ public class FileConfigurationSource
             // the problem is the default security was already loaded with the security-system component was loaded
             // so it has the defaults, the upgrade from 1.0.8 -> 1.4 moves security out of the nexus.xml
             // and we cannot use the 'correct' way of updating the info, because that would cause an infinit loop loading the nexus.xml
-            this.eventMulticaster.notifyEventListeners( new SecurityConfigurationChangedEvent( null ) );
+            // this.eventMulticaster.notifyEventListeners( new SecurityConfigurationChangedEvent( null ) );
         }
 
         ValidationResponse vResponse = getConfigurationValidator().validateModel(

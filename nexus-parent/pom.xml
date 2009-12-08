@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.sonatype.forge</groupId>
@@ -21,31 +22,21 @@
   <properties>
     <jetty.version>6.1.19</jetty.version>
     <plexus-utils.version>1.5.5</plexus-utils.version>
-    <plexus-container.version>1.2.1.4</plexus-container.version>
-    <plexus.version>1.2.1</plexus.version>
+    <plexus-container.version>1.5.2</plexus-container.version>
+    <plexus-classworlds.version>2.2.2</plexus-classworlds.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-container-default</artifactId>
-        <version>${plexus-container.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-          </exclusion>
-        </exclusions>
+        <artifactId>plexus-classworlds</artifactId>
+        <version>${plexus-classworlds.version}</version>
       </dependency>
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-classworlds</artifactId>
-        <version>1.4</version>
+        <artifactId>plexus-utils</artifactId>
+        <version>${plexus-utils.version}</version>
       </dependency>
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
@@ -54,8 +45,18 @@
       </dependency>
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-utils</artifactId>
-        <version>${plexus-utils.version}</version>
+        <artifactId>plexus-container-default</artifactId>
+        <version>${plexus-container.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging-api</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <!-- Jetty -->
@@ -119,19 +120,37 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>org.codehaus.plexus</groupId>
-          <artifactId>plexus-component-metadata</artifactId>
-          <version>${plexus.version}</version>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
           <executions>
             <execution>
-              <id>process-classes</id>
+              <id>attach-sources</id>
+              <phase>verify</phase>
               <goals>
-                <goal>generate-metadata</goal>
+                <goal>jar</goal>
               </goals>
             </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <executions>
             <execution>
-              <id>process-test-classes</id>
               <goals>
+                <goal>test-jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.plexus</groupId>
+          <artifactId>plexus-component-metadata</artifactId>
+          <version>${plexus-container.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>generate-metadata</goal>
                 <goal>generate-test-metadata</goal>
               </goals>
             </execution>
@@ -165,7 +184,7 @@
         <plugin>
           <groupId>org.codehaus.modello</groupId>
           <artifactId>modello-maven-plugin</artifactId>
-          <version>1.0.2</version>
+          <version>1.1</version>
           <configuration>
             <useJava5>true</useJava5>
           </configuration>

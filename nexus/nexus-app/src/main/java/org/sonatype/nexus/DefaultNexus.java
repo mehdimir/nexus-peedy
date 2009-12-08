@@ -77,8 +77,6 @@ import org.sonatype.nexus.templates.TemplateSet;
 import org.sonatype.nexus.templates.repository.RepositoryTemplate;
 import org.sonatype.nexus.timeline.RepositoryIdTimelineFilter;
 import org.sonatype.plexus.appevents.ApplicationEventMulticaster;
-import org.sonatype.plexus.components.ehcache.PlexusEhCacheWrapper;
-import org.sonatype.security.SecuritySystem;
 import org.sonatype.timeline.TimelineFilter;
 
 /**
@@ -169,15 +167,6 @@ public class DefaultNexus
      */
     @Requirement
     private ApplicationStatusSource applicationStatusSource;
-
-    /**
-     * Security component
-     */
-    @Requirement
-    private SecuritySystem securitySystem;
-    
-    @Requirement
-    private PlexusEhCacheWrapper cacheWrapper;
 
     // ----------------------------------------------------------------------------------------------------------
     // SystemStatus
@@ -676,14 +665,9 @@ public class DefaultNexus
 
         try
         {
-            cacheWrapper.start();
-            
             // force config load and validation
             // applies configuration and notifies listeners
             nexusConfiguration.loadConfiguration( true );
-
-            // essential service
-            securitySystem.start();
 
             // create internals
             nexusConfiguration.createInternals();
@@ -692,7 +676,7 @@ public class DefaultNexus
             nexusScheduler.initializeTasks();
 
             // notify about start
-            applicationEventMulticaster.notifyEventListeners( new ConfigurationChangeEvent( nexusConfiguration, null, null ) );
+            applicationEventMulticaster.notifyEventListeners( new ConfigurationChangeEvent( nexusConfiguration, null ) );
 
             addSystemEvent( FeedRecorder.SYSTEM_BOOT_ACTION, "Starting Nexus (version "
                 + getSystemStatus().getVersion() + " " + getSystemStatus().getEditionShort() + ")" );
@@ -772,8 +756,6 @@ public class DefaultNexus
 
         nexusConfiguration.dropInternals();
 
-        securitySystem.stop();
-
         try
         {
             indexerManager.shutdown( false );
@@ -782,8 +764,6 @@ public class DefaultNexus
         {
             getLogger().error( "Error while stopping IndexerManager:", e );
         }
-        
-        cacheWrapper.stop();
 
         applicationStatusSource.getSystemStatus().setState( SystemState.STOPPED );
 

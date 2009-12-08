@@ -70,12 +70,12 @@ public class ConfigurationChangeEventInspector
         {
             msg.append( " '" ).append( change.getName() ).append( "', " );
         }*/
-
+/*
         if ( event.getSubject() != null && event.getSubject().getPrincipal() != null )
         {
             msg.append( ", change was made by [" + event.getSubject().getPrincipal().toString() + "]" );
         }
-
+*/
         getFeedRecorder().addSystemEvent( FeedRecorder.SYSTEM_CONFIG_ACTION, msg.toString() );
     }
 

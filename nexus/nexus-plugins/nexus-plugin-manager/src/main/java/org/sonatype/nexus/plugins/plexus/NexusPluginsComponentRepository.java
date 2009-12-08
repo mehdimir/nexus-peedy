@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.codehaus.plexus.ClassRealmUtil;
+import org.codehaus.plexus.PlexusConstants;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.component.composition.CompositionResolver;
 import org.codehaus.plexus.component.composition.CycleDetectedInComponentGraphException;
@@ -69,7 +71,7 @@ public class NexusPluginsComponentRepository
         }
 
         // determine realms to search
-        LinkedHashSet<ClassRealm> realms = new LinkedHashSet<ClassRealm>();
+        Set<ClassRealm> realms = ClassRealmUtil.getContextRealms( null );
 
         // Solution: load all components from current realm and 1st level siblings only
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();

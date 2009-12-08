@@ -63,8 +63,8 @@ import org.sonatype.plexus.components.cipher.PlexusCipherException;
  * 
  * @author cstamas
  */
-@Component( role = SingleVersionUpgrader.class, hint = "1.0.8" )
-public class Upgrade108to140
+@Component( role = SingleVersionUpgrader.class, hint = "1.4.0" )
+public class Upgrade140to141
     extends AbstractLogEnabled
     implements SingleVersionUpgrader
 {
@@ -90,7 +90,7 @@ public class Upgrade108to140
 
     private static final String TASK_EXPIRE_CACHE_OLD = "ClearCacheTask";
 
-    public Upgrade108to140()
+    public Upgrade140to141()
     {
         // migrate to ENUMS
         this.localStatus.put( "inService", "IN_SERVICE" );

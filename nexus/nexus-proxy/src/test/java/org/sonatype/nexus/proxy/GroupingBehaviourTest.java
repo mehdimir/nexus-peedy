@@ -48,16 +48,18 @@ public class GroupingBehaviourTest
         File md2File = File.createTempFile( "md2", "tmp" );
 
         // get metadata directly from repo1, no aggregation, no spoofing
-        StorageItem item1 = getRepositoryRegistry().getRepository( "repo1" ).retrieveItem(
-            new ResourceStoreRequest( spoofedPath, false ) );
+        StorageItem item1 =
+            getRepositoryRegistry().getRepository( "repo1" ).retrieveItem(
+                new ResourceStoreRequest( spoofedPath, false ) );
         // it should be a file and unmodified
         checkForFileAndMatchContents( item1 );
         // save it
         saveItemToFile( (StorageFileItem) item1, md1File );
 
         // get metadata directly from repo2, no aggregation, no spoofing
-        StorageItem item2 = getRepositoryRegistry().getRepository( "repo2" ).retrieveItem(
-            new ResourceStoreRequest( spoofedPath, false ) );
+        StorageItem item2 =
+            getRepositoryRegistry().getRepository( "repo2" ).retrieveItem(
+                new ResourceStoreRequest( spoofedPath, false ) );
         // it should be a file and unmodified
         checkForFileAndMatchContents( item2 );
         // save it
@@ -70,10 +72,10 @@ public class GroupingBehaviourTest
         mgr.setMergeMetadata( false );
         mgr.getCurrentCoreConfiguration().commitChanges();
         getApplicationEventMulticaster().notifyEventListeners(
-            new ConfigurationChangeEvent( getApplicationConfiguration(), null, null ) );
+            new ConfigurationChangeEvent( getApplicationConfiguration(), null ) );
 
-        StorageItem item = getRootRouter()
-            .retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
+        StorageItem item =
+            getRootRouter().retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
         // it should be a file and unmodified to repo1 originated file
         checkForFileAndMatchContents( item, md1File );
 
@@ -91,10 +93,10 @@ public class GroupingBehaviourTest
 
         // get metadata from a gidr router with merging on (default is on), merge should happen
         getApplicationEventMulticaster().notifyEventListeners(
-            new ConfigurationChangeEvent( getApplicationConfiguration(), null, null ) );
+            new ConfigurationChangeEvent( getApplicationConfiguration(), null ) );
 
-        StorageItem item = getRootRouter()
-            .retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
+        StorageItem item =
+            getRootRouter().retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
         // save it
         saveItemToFile( (StorageFileItem) item, md1File );
         // some content check
@@ -103,8 +105,9 @@ public class GroupingBehaviourTest
         assertEquals( "20030303030303", md1.getVersioning().getLastUpdated() );
 
         // get metadata directly from repo1, no aggregation, no spoofing
-        StorageItem item1 = getRepositoryRegistry().getRepository( "repo1" ).retrieveItem(
-            new ResourceStoreRequest( spoofedPath, false ) );
+        StorageItem item1 =
+            getRepositoryRegistry().getRepository( "repo1" ).retrieveItem(
+                new ResourceStoreRequest( spoofedPath, false ) );
         // it should be a file and unmodified
         checkForFileAndMatchContents( item1 );
         // save it
@@ -116,8 +119,9 @@ public class GroupingBehaviourTest
         assertEquals( "20010101010101", md1.getVersioning().getLastUpdated() );
 
         // get metadata directly from repo2, no aggregation, no spoofing
-        StorageItem item2 = getRepositoryRegistry().getRepository( "repo2" ).retrieveItem(
-            new ResourceStoreRequest( spoofedPath, false ) );
+        StorageItem item2 =
+            getRepositoryRegistry().getRepository( "repo2" ).retrieveItem(
+                new ResourceStoreRequest( spoofedPath, false ) );
         // it should be a file and unmodified
         checkForFileAndMatchContents( item2 );
         // save it
@@ -134,7 +138,7 @@ public class GroupingBehaviourTest
         mgr.setMergeMetadata( false );
         mgr.getCurrentCoreConfiguration().commitChanges();
         getApplicationEventMulticaster().notifyEventListeners(
-            new ConfigurationChangeEvent( getApplicationConfiguration(), null, null ) );
+            new ConfigurationChangeEvent( getApplicationConfiguration(), null ) );
 
         item = getRootRouter().retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
         // it should be a file and unmodified
@@ -152,8 +156,8 @@ public class GroupingBehaviourTest
         Metadata mdm;
 
         // get metadata from a gidr router, merging should happen
-        StorageItem item = getRootRouter()
-            .retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
+        StorageItem item =
+            getRootRouter().retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
         // it should be a file
         assertTrue( StorageFileItem.class.isAssignableFrom( item.getClass() ) );
         // save it
@@ -200,8 +204,8 @@ public class GroupingBehaviourTest
         Metadata mdm;
 
         // get metadata from a gidr router, merging should happen
-        StorageItem item = getRootRouter()
-            .retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
+        StorageItem item =
+            getRootRouter().retrieveItem( new ResourceStoreRequest( "/groups/test" + spoofedPath, false ) );
         // it should be a file
         assertTrue( StorageFileItem.class.isAssignableFrom( item.getClass() ) );
         // save it

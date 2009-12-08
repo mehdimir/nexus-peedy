@@ -21,9 +21,10 @@
 package org.sonatype.nexus.proxy.cache;
 
 import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.AbstractLogEnabled;
-import org.sonatype.plexus.components.ehcache.PlexusEhCacheWrapper;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.Startable;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.StartingException;
+import org.codehaus.plexus.personality.plexus.lifecycle.phase.StoppingException;
 
 /**
  * The Class EhCacheCacheManager is a thin wrapper around EhCache, just to make things going.
@@ -33,22 +34,36 @@ import org.sonatype.plexus.components.ehcache.PlexusEhCacheWrapper;
 @Component( role = CacheManager.class )
 public class EhCacheCacheManager
     extends AbstractLogEnabled
-    implements CacheManager
+    implements CacheManager, Startable
 {
-    @Requirement
-    private PlexusEhCacheWrapper cacheManager;
-    
+    private net.sf.ehcache.CacheManager ehCacheManager;
+
     public static final String SINGLE_PATH_CACHE_NAME = "path-cache";
 
     public PathCache getPathCache( String cache )
     {
-        net.sf.ehcache.CacheManager ehCacheManager = this.cacheManager.getEhCacheManager();
-
-        if ( !ehCacheManager.cacheExists( SINGLE_PATH_CACHE_NAME ) )
+        if ( !getCacheManager().cacheExists( SINGLE_PATH_CACHE_NAME ) )
         {
-            ehCacheManager.addCache( SINGLE_PATH_CACHE_NAME );
+            getCacheManager().addCache( SINGLE_PATH_CACHE_NAME );
         }
 
-        return new EhCachePathCache( cache, ehCacheManager.getEhcache( SINGLE_PATH_CACHE_NAME ) );
+        return new EhCachePathCache( cache, getCacheManager().getEhcache( SINGLE_PATH_CACHE_NAME ) );
+    }
+
+    public void start()
+        throws StartingException
+    {
+        ehCacheManager = new net.sf.ehcache.CacheManager();
+    }
+
+    public void stop()
+        throws StoppingException
+    {
+        ehCacheManager.shutdown();
+    }
+
+    protected net.sf.ehcache.CacheManager getCacheManager()
+    {
+        return ehCacheManager;
     }
 }

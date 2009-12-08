@@ -31,7 +31,6 @@
       <artifactId>nexus-utils</artifactId>
     </dependency>
 
-    <!-- Here for "compatibility" reason only! -->
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
       <artifactId>plexus-component-annotations</artifactId>

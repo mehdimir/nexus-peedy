@@ -18,7 +18,6 @@ import org.sonatype.nexus.mime.MimeUtil;
 import org.sonatype.nexus.proxy.cache.CacheManager;
 import org.sonatype.nexus.proxy.item.RepositoryItemUidFactory;
 import org.sonatype.scheduling.Scheduler;
-import org.sonatype.security.SecuritySystem;
 
 public abstract class AbstractNexusTestEnvironment
     extends AbstractNexusTestCase
@@ -50,8 +49,6 @@ public abstract class AbstractNexusTestEnvironment
         repositoryItemUidFactory = lookup( RepositoryItemUidFactory.class );
 
         mimeUtil = lookup( MimeUtil.class );
-
-        this.lookup( SecuritySystem.class ).setSecurityEnabled( false );
     }
 
     /**

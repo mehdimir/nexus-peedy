@@ -58,7 +58,6 @@ import org.sonatype.nexus.proxy.storage.remote.DefaultRemoteStorageContext;
 import org.sonatype.nexus.proxy.storage.remote.RemoteStorageContext;
 import org.sonatype.nexus.tasks.descriptors.ScheduledTaskDescriptor;
 import org.sonatype.plexus.appevents.ApplicationEventMulticaster;
-import org.sonatype.security.SecuritySystem;
 
 /**
  * The class DefaultNexusConfiguration is responsible for config management. It actually keeps in sync Nexus internal
@@ -106,9 +105,6 @@ public class DefaultNexusConfiguration
 
     @Requirement( role = ScheduledTaskDescriptor.class )
     private List<ScheduledTaskDescriptor> scheduledTaskDescriptors;
-
-    @Requirement
-    private SecuritySystem securitySystem;
 
     @org.codehaus.plexus.component.annotations.Configuration( value = "${nexus-work}" )
     private File workingDirectory;
@@ -209,8 +205,7 @@ public class DefaultNexusConfiguration
 
             applicationEventMulticaster.notifyEventListeners( new ConfigurationChangeEvent(
                 this,
-                prepare.getChanges(),
-                securitySystem.getSubject() ) );
+                prepare.getChanges() ) );
 
             return true;
         }
