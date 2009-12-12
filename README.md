@@ -2,7 +2,7 @@
 
 This is Nexus Personal Edition (or Nexus speedy), a "hobby" project of mine, based on Nexus OSS Core, chopped with some not needed features, and added some new ones.  Targeted for "personal" setups, usually on same workstation where developer works.
 
-WWW: https://docs.sonatype.org/display/Nexus/NexusPEED
+WWW: https://docs.sonatype.org/display/Nexus/NexusPEEDY
 
 Issue tracking: none yet
 
@@ -13,9 +13,12 @@ here will rebase happen. So, please be careful!
 
 This is short list of main goals
 
-* have a "fast forward" of Nexus, added new features
+* speedy, have a "fast forward" of Nexus in development sense, added new features, dropped the bad ones
+* speedy, as to be fastest in it's basic function (serving artifacts) of all MRMs
 * simple, lightweigt, umm, featherweight deployment and runtime
-* speedy as Gonzales ;)
+* hub for experiments with new technologies
+* *potentially* serve as source of back-contributes patches to the TRUNK
+* ah, and speedy as Gonzales ;)
 
 ## Branches
 
