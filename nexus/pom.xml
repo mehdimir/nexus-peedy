@@ -139,6 +139,7 @@
     <module>nexus-vaadin-ui</module>
     <module>nexus-remoting-api</module>
     <module>nexus-war</module>
+    <module>nexus-web-utils</module>
 
     <!--
       <module>nexus-core-plugins</module>
