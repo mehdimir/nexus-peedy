@@ -64,21 +64,20 @@ public class RepositoryContentPlexusResource
 
     @Override
     protected ResourceStore getResourceStore( Request request )
-        throws NoSuchRepositoryException,
-            ResourceException
+        throws NoSuchRepositoryException, ResourceException
     {
-        return getUnprotectedRepositoryRegistry().getRepository(
+        return getRepositoryRegistry().getRepository(
             request.getAttributes().get( AbstractRepositoryPlexusResource.REPOSITORY_ID_KEY ).toString() );
     }
-    
+
     @Override
     protected ResourceStoreRequest getResourceStoreRequest( Request request, String resourceStorePath )
     {
         ResourceStoreRequest resourceStoreRequest = super.getResourceStoreRequest( request, resourceStorePath );
-        
+
         // welcome files should not be used with this resource.
         resourceStoreRequest.getRequestContext().put( USE_WELCOME_FILES, Boolean.FALSE );
-        
+
         return resourceStoreRequest;
     }
 

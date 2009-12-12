@@ -572,7 +572,7 @@ public abstract class AbstractArtifactPlexusResource
     {
         try
         {
-            Repository repository = getUnprotectedRepositoryRegistry().getRepository( id );
+            Repository repository = getRepositoryRegistry().getRepository( id );
 
             if ( !repository.getRepositoryKind().isFacetAvailable( MavenRepository.class ) )
             {

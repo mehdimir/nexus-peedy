@@ -23,19 +23,19 @@ import org.sonatype.nexus.configuration.application.NexusConfiguration;
 public class NexusBooterListener
     implements ServletContextListener
 {
-
-    private static PlexusContainer plexus;
-
     public void contextInitialized( ServletContextEvent sce )
     {
         try
         {
-            plexus = (PlexusContainer) sce.getServletContext().getAttribute( "plexus" );
+            PlexusContainer plexus =
+                (PlexusContainer) sce.getServletContext().getAttribute( PlexusContainer.class.getName() );
 
             Nexus nexus = plexus.lookup( Nexus.class );
+
             sce.getServletContext().setAttribute( Nexus.class.getName(), nexus );
 
             NexusConfiguration nexusConfiguration = plexus.lookup( NexusConfiguration.class );
+
             sce.getServletContext().setAttribute( NexusConfiguration.class.getName(), nexusConfiguration );
         }
         catch ( Exception e )
@@ -46,10 +46,5 @@ public class NexusBooterListener
 
     public void contextDestroyed( ServletContextEvent sce )
     {
-        plexus = null;
-    }
-
-    public static PlexusContainer getPlexus() {
-        return plexus;
     }
 }

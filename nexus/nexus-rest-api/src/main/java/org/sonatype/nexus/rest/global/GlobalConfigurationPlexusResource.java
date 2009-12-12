@@ -19,7 +19,6 @@ import java.util.List;
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.StringUtils;
-import org.jsecurity.authc.UsernamePasswordToken;
 import org.restlet.Context;
 import org.restlet.data.Reference;
 import org.restlet.data.Request;
@@ -47,10 +46,8 @@ import org.sonatype.nexus.rest.model.SmtpSettings;
 import org.sonatype.plexus.rest.resource.PathProtectionDescriptor;
 import org.sonatype.plexus.rest.resource.PlexusResource;
 import org.sonatype.plexus.rest.resource.PlexusResourceException;
-import org.sonatype.security.SecuritySystem;
-import org.sonatype.security.authentication.AuthenticationException;
-import org.sonatype.security.configuration.source.SecurityConfigurationSource;
-import org.sonatype.security.usermanagement.UserNotFoundException;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * The GlobalConfiguration resource. It simply gets and builds the requested config REST model (DTO) and passes
@@ -72,45 +69,14 @@ public class GlobalConfigurationPlexusResource
     /** Name denoting default Nexus configuration */
     public static final String DEFAULT_CONFIG_NAME = "default";
 
-    @Requirement
-    private SecuritySystem securitySystem;
-
     // DEFAULT CONFIG
     // ==
-    @Requirement( hint = "static" )
-    private SecurityConfigurationSource defaultSecurityConfigurationSource;
-
     @Requirement( hint = "static" )
     private ApplicationConfigurationSource configurationSource;
 
     // ----------------------------------------------------------------------------
     // Default Configuration
     // ----------------------------------------------------------------------------
-
-    public boolean isDefaultSecurityEnabled()
-    {
-        return this.defaultSecurityConfigurationSource.getConfiguration().isEnabled();
-    }
-
-    public boolean isDefaultAnonymousAccessEnabled()
-    {
-        return this.defaultSecurityConfigurationSource.getConfiguration().isAnonymousAccessEnabled();
-    }
-
-    public String getDefaultAnonymousUsername()
-    {
-        return this.defaultSecurityConfigurationSource.getConfiguration().getAnonymousUsername();
-    }
-
-    public String getDefaultAnonymousPassword()
-    {
-        return this.defaultSecurityConfigurationSource.getConfiguration().getAnonymousPassword();
-    }
-
-    public List<String> getDefaultRealms()
-    {
-        return this.defaultSecurityConfigurationSource.getConfiguration().getRealms();
-    }
 
     public CRemoteConnectionSettings readDefaultGlobalRemoteConnectionSettings()
     {
@@ -339,46 +305,46 @@ public class GlobalConfigurationPlexusResource
                             || !StringUtils.equals( newPassword, oldPassword ) )
                         {
                             // test auth
-                            try
-                            {
-                                // try to "log in" with supplied credentials
-                                // the anon user a) should exists b) the pwd must work
-                                securitySystem.getUser( resource.getSecurityAnonymousUsername() );
-
-                                securitySystem.authenticate( new UsernamePasswordToken( resource
-                                    .getSecurityAnonymousUsername(), newPassword ) );
-
-                            }
-                            catch ( UserNotFoundException e )
-                            {
-
-                                getLogger()
-                                    .warn(
-                                           "Nexus refused to apply configuration, the supplied anonymous information is wrong.",
-                                           e );
-
-                                String msg = "User '" + resource.getSecurityAnonymousUsername() + "' does not exist.";
-
-                                throw new PlexusResourceException( Status.CLIENT_ERROR_BAD_REQUEST, msg,
-                                                                   getNexusErrorResponse( "securityAnonymousUsername",
-                                                                                          msg ) );
-                            }
-                            catch ( AuthenticationException e )
-                            {
-                                // the supplied anon auth info is wrong
-                                getLogger()
-                                    .warn(
-                                           "Nexus refused to apply configuration, the supplied anonymous information is wrong.",
-                                           e );
-
-                                String msg =
-                                    "The password of user '" + resource.getSecurityAnonymousUsername()
-                                        + "' is incorrect.";
-
-                                throw new PlexusResourceException( Status.CLIENT_ERROR_BAD_REQUEST, msg,
-                                                                   getNexusErrorResponse( "securityAnonymousPassword",
-                                                                                          msg ) );
-                            }
+//                            try
+//                            {
+//                                // try to "log in" with supplied credentials
+//                                // the anon user a) should exists b) the pwd must work
+//                                securitySystem.getUser( resource.getSecurityAnonymousUsername() );
+//
+//                                securitySystem.authenticate( new UsernamePasswordToken( resource
+//                                    .getSecurityAnonymousUsername(), newPassword ) );
+//
+//                            }
+//                            catch ( UserNotFoundException e )
+//                            {
+//
+//                                getLogger()
+//                                    .warn(
+//                                           "Nexus refused to apply configuration, the supplied anonymous information is wrong.",
+//                                           e );
+//
+//                                String msg = "User '" + resource.getSecurityAnonymousUsername() + "' does not exist.";
+//
+//                                throw new PlexusResourceException( Status.CLIENT_ERROR_BAD_REQUEST, msg,
+//                                                                   getNexusErrorResponse( "securityAnonymousUsername",
+//                                                                                          msg ) );
+//                            }
+//                            catch ( AuthenticationException e )
+//                            {
+//                                // the supplied anon auth info is wrong
+//                                getLogger()
+//                                    .warn(
+//                                           "Nexus refused to apply configuration, the supplied anonymous information is wrong.",
+//                                           e );
+//
+//                                String msg =
+//                                    "The password of user '" + resource.getSecurityAnonymousUsername()
+//                                        + "' is incorrect.";
+//
+//                                throw new PlexusResourceException( Status.CLIENT_ERROR_BAD_REQUEST, msg,
+//                                                                   getNexusErrorResponse( "securityAnonymousPassword",
+//                                                                                          msg ) );
+//                            }
                         }
 
                         getNexusConfiguration().setAnonymousUsername( resource.getSecurityAnonymousUsername() );
@@ -476,13 +442,13 @@ public class GlobalConfigurationPlexusResource
      */
     protected void fillDefaultConfiguration( Request request, GlobalConfigurationResource resource )
     {
-        resource.setSecurityEnabled( isDefaultSecurityEnabled() );
+        resource.setSecurityEnabled( false );
 
-        resource.setSecurityAnonymousAccessEnabled( isDefaultAnonymousAccessEnabled() );
+        resource.setSecurityAnonymousAccessEnabled( false );
 
-        resource.setSecurityRealms( getDefaultRealms() );
+        resource.setSecurityRealms( Collections.emptyList() );
 
-        resource.setSecurityAnonymousUsername( getDefaultAnonymousUsername() );
+        resource.setSecurityAnonymousUsername( "" );
 
         resource.setSecurityAnonymousPassword( PASSWORD_PLACE_HOLDER );
 

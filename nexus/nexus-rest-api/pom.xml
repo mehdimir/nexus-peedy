@@ -14,11 +14,6 @@
     </dependency>
     <dependency>
       <groupId>org.sonatype.nexus</groupId>
-      <artifactId>nexus-app</artifactId>
-      <classifier>tests</classifier>
-    </dependency>
-    <dependency>
-      <groupId>org.sonatype.nexus</groupId>
       <artifactId>nexus-configuration</artifactId>
     </dependency>
     <dependency>
@@ -40,10 +35,12 @@
     <dependency>
       <groupId>org.sonatype.plexus</groupId>
       <artifactId>plexus-jetty6</artifactId>
+      <version>1.7</version>
     </dependency>
     <dependency>
       <groupId>org.sonatype.plexus</groupId>
       <artifactId>plexus-restlet-bridge</artifactId>
+      <version>1.13</version>
     </dependency>
     <dependency>
       <groupId>org.apache.velocity</groupId>
@@ -53,38 +50,15 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.sonatype.security</groupId>
-      <artifactId>security-rest-api</artifactId>
-    </dependency>
+
     <!-- In the JSec filters -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jul-to-slf4j</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.plexus</groupId>
-      <artifactId>plexus-slf4j-logging</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.codehaus.plexus</groupId>
-          <artifactId>plexus-component-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-simple</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.codehaus.plexus</groupId>
@@ -102,6 +76,7 @@
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
     </dependency>
+
     <!-- For testing -->
     <dependency>
       <groupId>junit</groupId>
@@ -109,8 +84,41 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonatype.plexus.appevents</groupId>
+      <artifactId>simple-event-multicaster</artifactId>
+      <version>${plexus-app-events.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-slf4j-logging</artifactId>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.plexus</groupId>
+          <artifactId>plexus-component-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-simple</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
       <groupId>org.easymock</groupId>
       <artifactId>easymock</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sonatype.nexus</groupId>
+      <artifactId>nexus-app</artifactId>
+      <version>${project.version}</version>
+      <classifier>tests</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -127,6 +135,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>

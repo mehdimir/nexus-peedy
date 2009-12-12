@@ -23,13 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.fileupload.FileItem;
 import org.codehaus.plexus.util.StringUtils;
 import org.restlet.Context;
-import org.restlet.data.ChallengeRequest;
-import org.restlet.data.ChallengeScheme;
 import org.restlet.data.MediaType;
 import org.restlet.data.Request;
 import org.restlet.data.Response;
@@ -63,12 +59,7 @@ import org.sonatype.nexus.rest.model.ContentListDescribeResourceResponse;
 import org.sonatype.nexus.rest.model.ContentListDescribeResponseResource;
 import org.sonatype.nexus.rest.model.ContentListResource;
 import org.sonatype.nexus.rest.model.ContentListResourceResponse;
-import org.sonatype.nexus.rest.repositories.AbstractRepositoryPlexusResource;
-import org.sonatype.nexus.security.filter.authc.NexusHttpAuthenticationFilter;
 import org.sonatype.plexus.rest.representation.VelocityRepresentation;
-
-import com.noelios.restlet.ext.servlet.ServletCall;
-import com.noelios.restlet.http.HttpRequest;
 
 /**
  * This is an abstract resource handler that uses ResourceStore implementor and publishes those over REST.
@@ -717,30 +708,8 @@ public abstract class AbstractResourceStoreContentPlexusResource
         }
         else if ( t instanceof AccessDeniedException )
         {
-            // TODO: a big fat problem here!
-            // this makes restlet code tied to Servlet code, and we what is happening here is VERY dirty!
-            HttpServletRequest servletRequest = ( (ServletCall) ( (HttpRequest) req ).getHttpCall() ).getRequest();
-
-            String scheme = (String) servletRequest.getAttribute( NexusHttpAuthenticationFilter.AUTH_SCHEME_KEY );
-
-            ChallengeScheme challengeScheme = null;
-
-            if ( NexusHttpAuthenticationFilter.FAKE_AUTH_SCHEME.equals( scheme ) )
-            {
-                challengeScheme = new ChallengeScheme( "HTTP_NXBASIC", "NxBasic", "Fake basic HTTP authentication" );
-            }
-            else
-            {
-                challengeScheme = ChallengeScheme.HTTP_BASIC;
-            }
-
-            String realm = (String) servletRequest.getAttribute( NexusHttpAuthenticationFilter.AUTH_REALM_KEY );
-
-            res.setStatus( Status.CLIENT_ERROR_UNAUTHORIZED );
-
-            res.getChallengeRequests().add( new ChallengeRequest( challengeScheme, realm ) );
-
-            // throw new ResourceException( Status.CLIENT_ERROR_UNAUTHORIZED, "Authenticate to access this resource!" );
+            // and should the filter equip the challenge
+            throw new ResourceException( Status.CLIENT_ERROR_UNAUTHORIZED, t.getMessage() );
         }
         else
         {

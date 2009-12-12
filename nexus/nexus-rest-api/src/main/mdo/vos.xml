@@ -2130,8 +2130,7 @@
     <class>
       <name>NexusAuthenticationClientPermissions</name>
       <version>1.0.0+</version>
-      <superClass>org.sonatype.security.rest.model.AuthenticationClientPermissions
-      </superClass>
+      <!-- superClass>org.sonatype.security.rest.model.AuthenticationClientPermissions</superClass-->
     </class>
 
     <!-- NFCs -->

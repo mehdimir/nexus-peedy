@@ -133,6 +133,7 @@
     <module>nexus-configuration</module>
     <module>nexus-proxy</module>
     <module>nexus-app</module>
+    <module>nexus-rest-api</module>
     
     <module>nexus-peedy-edition</module>
     <module>nexus-vaadin-ui</module>
@@ -163,7 +164,7 @@
     <plexus-digest.version>1.1</plexus-digest.version>
     <plexus-cli.version>1.2</plexus-cli.version>
     <plexus-interpolation.version>1.6</plexus-interpolation.version>
-    <plexus-slf4j-logging.version>1.1-alpha-1</plexus-slf4j-logging.version>
+    <plexus-slf4j-logging.version>1.1-alpha-2-SNAPSHOT</plexus-slf4j-logging.version>
     <plexus-velocity.version>1.1.7</plexus-velocity.version>
     <commons-beanutils.version>1.7.0</commons-beanutils.version>
     <plexus-jetty-testsuite.version>1.3</plexus-jetty-testsuite.version>
@@ -254,21 +255,6 @@
         <version>${plexus-interpolation.version}</version>
       </dependency>
       <dependency>
-        <groupId>org.codehaus.plexus</groupId>
-        <artifactId>plexus-slf4j-logging</artifactId>
-        <version>${plexus-slf4j-logging.version}</version>
-        <exclusions>
-          <exclusion>
-            <groupId>org.codehaus.plexus</groupId>
-            <artifactId>plexus-component-api</artifactId>
-          </exclusion>
-          <exclusion>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-          </exclusion>
-        </exclusions>
-      </dependency>
-      <dependency>
         <groupId>org.sonatype.micromailer</groupId>
         <artifactId>micromailer</artifactId>
         <version>${micromailer.version}</version>
@@ -321,10 +307,33 @@
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
+        <artifactId>jul-to-slf4j</artifactId>
+        <version>${slf4j.version}</version>
+        <type>jar</type>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.slf4j</groupId>
         <artifactId>slf4j-simple</artifactId>
         <version>${slf4j.version}</version>
         <type>jar</type>
         <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-slf4j-logging</artifactId>
+        <version>${plexus-slf4j-logging.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-component-api</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <!-- Maven -->

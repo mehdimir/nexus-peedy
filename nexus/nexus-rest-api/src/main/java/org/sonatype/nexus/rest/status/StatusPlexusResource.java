@@ -25,17 +25,16 @@ import org.restlet.resource.ResourceException;
 import org.restlet.resource.Variant;
 import org.sonatype.nexus.Nexus;
 import org.sonatype.nexus.SystemStatus;
+import org.sonatype.nexus.rest.AbstractNexusPlexusResource;
 import org.sonatype.nexus.rest.model.NexusAuthenticationClientPermissions;
 import org.sonatype.nexus.rest.model.StatusResource;
 import org.sonatype.nexus.rest.model.StatusResourceResponse;
 import org.sonatype.plexus.rest.resource.ManagedPlexusResource;
 import org.sonatype.plexus.rest.resource.PathProtectionDescriptor;
-import org.sonatype.security.rest.authentication.AbstractUIPermissionCalculatingPlexusResource;
-import org.sonatype.security.rest.model.AuthenticationClientPermissions;
 
 @Component( role = ManagedPlexusResource.class, hint = "StatusPlexusResource" )
 public class StatusPlexusResource
-    extends AbstractUIPermissionCalculatingPlexusResource
+    extends AbstractNexusPlexusResource
     implements ManagedPlexusResource
 {
 
@@ -131,18 +130,18 @@ public class StatusPlexusResource
 
     private NexusAuthenticationClientPermissions getClientPermissions(Request request) throws ResourceException
     {
-        AuthenticationClientPermissions originalClientPermissions = getClientPermissionsForCurrentUser( request );
+        // AuthenticationClientPermissions originalClientPermissions = getClientPermissionsForCurrentUser( request );
         
         // TODO: this is a modello work around,
         // the SystemStatus could not include a field of type AuthenticationClientPermissions
         // because it is in a different model, but I can extend that class... and include it.
         
         NexusAuthenticationClientPermissions clientPermissions = new NexusAuthenticationClientPermissions();
-        clientPermissions.setLoggedIn( originalClientPermissions.isLoggedIn() );
-        clientPermissions.setLoggedInUsername( originalClientPermissions.getLoggedInUsername() );
-        clientPermissions.setLoggedInUserSource( originalClientPermissions.getLoggedInUserSource() );
-        clientPermissions.setLoggedInUserSource( originalClientPermissions.getLoggedInUserSource() );
-        clientPermissions.setPermissions( originalClientPermissions.getPermissions() );
+        // clientPermissions.setLoggedIn( originalClientPermissions.isLoggedIn() );
+        // clientPermissions.setLoggedInUsername( originalClientPermissions.getLoggedInUsername() );
+        // clientPermissions.setLoggedInUserSource( originalClientPermissions.getLoggedInUserSource() );
+        // clientPermissions.setLoggedInUserSource( originalClientPermissions.getLoggedInUserSource() );
+        // clientPermissions.setPermissions( originalClientPermissions.getPermissions() );
         
         return clientPermissions;
     }

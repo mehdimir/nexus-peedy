@@ -66,11 +66,8 @@ public abstract class AbstractNexusPlexusResource
     @Requirement
     private NexusConfiguration nexusConfiguration;
 
-    @Requirement( hint = "protected" )
+    @Requirement
     private RepositoryRegistry repositoryRegistry;
-
-    @Requirement( hint = "default" )
-    private RepositoryRegistry defaultRepositoryRegistry;
     
     @Requirement
     private RepositoryTypeRegistry repoTypeRegistry;
@@ -91,11 +88,6 @@ public abstract class AbstractNexusPlexusResource
     protected RepositoryRegistry getRepositoryRegistry()
     {
         return repositoryRegistry;
-    }
-    
-    protected RepositoryRegistry getUnprotectedRepositoryRegistry()
-    {
-        return defaultRepositoryRegistry;
     }
 
     /**
@@ -163,7 +155,7 @@ public abstract class AbstractNexusPlexusResource
     {
         try
         {
-            Repository repo = repositoryRegistry.getRepository( repoId );
+            Repository repo = getRepositoryRegistry().getRepository( repoId );
             
             for ( RepositoryTypeDescriptor desc : repoTypeRegistry.getRegisteredRepositoryTypeDescriptors() )
             {
@@ -368,7 +360,7 @@ public abstract class AbstractNexusPlexusResource
 
         try
         {
-            Repository repository = getUnprotectedRepositoryRegistry().getRepository( ai.repository );
+            Repository repository = getRepositoryRegistry().getRepository( ai.repository );
 
             if ( MavenRepository.class.isAssignableFrom( repository.getClass() ) )
             {
