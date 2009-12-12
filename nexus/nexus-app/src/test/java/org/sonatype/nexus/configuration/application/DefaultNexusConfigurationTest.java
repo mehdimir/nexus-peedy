@@ -27,14 +27,11 @@ import org.sonatype.nexus.configuration.model.CRepository;
 import org.sonatype.nexus.configuration.model.Configuration;
 import org.sonatype.nexus.email.NexusEmailer;
 import org.sonatype.nexus.proxy.repository.LocalStatus;
-import org.sonatype.security.SecuritySystem;
 
 public class DefaultNexusConfigurationTest
     extends AbstractNexusTestCase
 {
     protected DefaultNexusConfiguration nexusConfiguration;
-
-    protected SecuritySystem securitySystem;
 
     protected NexusEmailer nexusEmailer;
 
@@ -48,8 +45,6 @@ public class DefaultNexusConfigurationTest
         nexusConfiguration = (DefaultNexusConfiguration) this.lookup( NexusConfiguration.class );
 
         nexusConfiguration.loadConfiguration();
-
-        securitySystem = this.lookup( SecuritySystem.class );
 
         nexusEmailer = lookup( NexusEmailer.class );
 
@@ -72,17 +67,11 @@ public class DefaultNexusConfigurationTest
     {
         Configuration config = nexusConfiguration.getConfigurationModel();
 
-        assertEquals( true, this.securitySystem.isSecurityEnabled() );
-
-        this.securitySystem.setSecurityEnabled( false );
-
         nexusConfiguration.saveConfiguration();
 
         nexusConfiguration.loadConfiguration();
 
         config = nexusConfiguration.getConfigurationModel();
-
-        assertEquals( false, this.securitySystem.isSecurityEnabled() );
     }
 
     public void testSaveGlobalProxyConfiguration()

@@ -65,6 +65,7 @@ public interface ApplicationConfiguration
      * 
      * @return
      */
+    @Deprecated
     boolean isSecurityEnabled();
 
     /**

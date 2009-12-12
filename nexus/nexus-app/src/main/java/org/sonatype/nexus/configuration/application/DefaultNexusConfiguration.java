@@ -374,58 +374,68 @@ public class DefaultNexusConfiguration
     // ------------------------------------------------------------------
     // Security
 
+    @Deprecated
     public boolean isSecurityEnabled()
     {
-        return getSecuritySystem() != null && getSecuritySystem().isSecurityEnabled();
+        return false;
     }
 
+    @Deprecated
     public void setSecurityEnabled( boolean enabled )
         throws IOException
     {
-        getSecuritySystem().setSecurityEnabled( enabled );
+        // noop
     }
 
+    @Deprecated
     public void setRealms( List<String> realms )
         throws org.sonatype.configuration.validation.InvalidConfigurationException
     {
-        getSecuritySystem().setRealms( realms );
+        // noop
     }
 
+    @Deprecated
     public boolean isAnonymousAccessEnabled()
     {
-        return getSecuritySystem() != null && getSecuritySystem().isAnonymousAccessEnabled();
+        return true;
     }
 
+    @Deprecated
     public void setAnonymousAccessEnabled( boolean enabled )
     {
-        getSecuritySystem().setAnonymousAccessEnabled( enabled );
+        // noop
     }
 
+    @Deprecated
     public String getAnonymousUsername()
     {
-        return getSecuritySystem().getAnonymousUsername();
+        return "anonymous";
     }
 
+    @Deprecated
     public void setAnonymousUsername( String val )
         throws org.sonatype.configuration.validation.InvalidConfigurationException
     {
-        getSecuritySystem().setAnonymousUsername( val );
+        // noop
     }
 
+    @Deprecated
     public String getAnonymousPassword()
     {
-        return getSecuritySystem().getAnonymousPassword();
+        return "anonymous";
     }
 
+    @Deprecated
     public void setAnonymousPassword( String val )
         throws org.sonatype.configuration.validation.InvalidConfigurationException
     {
-        getSecuritySystem().setAnonymousPassword( val );
+        // noop
     }
 
+    @Deprecated
     public List<String> getRealms()
     {
-        return getSecuritySystem().getRealms();
+        return Collections.emptyList();
     }
 
     // ------------------------------------------------------------------
@@ -737,10 +747,5 @@ public class DefaultNexusConfiguration
         {
             return null;
         }
-    }
-
-    protected SecuritySystem getSecuritySystem()
-    {
-        return this.securitySystem;
     }
 }

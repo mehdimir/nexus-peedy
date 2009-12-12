@@ -133,9 +133,12 @@
     <module>nexus-configuration</module>
     <module>nexus-proxy</module>
     <module>nexus-app</module>
-    <module>nexus-core-plugins</module>
+    <module>nexus-vaadin-ui</module>
+    <module>nexus-remoting-api</module>
+    <module>nexus-war</module>
 
 <!--
+    <module>nexus-core-plugins</module>
     <module>nexus-mock</module>
     <module>nexus-rest-api</module>
     <module>nexus-migration-tool</module>

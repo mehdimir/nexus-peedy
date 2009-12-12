@@ -31,28 +31,38 @@ public interface MutableConfiguration
     // Repositories
     // ----------------------------------------------------------------------------------------------------------
 
+    @Deprecated
     boolean isSecurityEnabled();
 
+    @Deprecated
     void setSecurityEnabled( boolean enabled )
         throws IOException;
 
+    @Deprecated
     boolean isAnonymousAccessEnabled();
 
+    @Deprecated
     void setAnonymousAccessEnabled( boolean enabled )
         throws IOException;
 
+    @Deprecated
     String getAnonymousUsername();
 
+    @Deprecated
     void setAnonymousUsername( String val )
         throws InvalidConfigurationException;
 
+    @Deprecated
     String getAnonymousPassword();
 
+    @Deprecated
     void setAnonymousPassword( String val )
         throws InvalidConfigurationException;
 
+    @Deprecated
     List<String> getRealms();
 
+    @Deprecated
     void setRealms( List<String> realms )
         throws InvalidConfigurationException;
 

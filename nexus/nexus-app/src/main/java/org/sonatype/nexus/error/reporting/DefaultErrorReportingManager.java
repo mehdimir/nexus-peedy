@@ -33,7 +33,6 @@ import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.swizzle.jira.Issue;
 import org.codehaus.swizzle.jira.Jira;
-import org.mortbay.jetty.EofException;
 import org.sonatype.configuration.ConfigurationException;
 import org.sonatype.nexus.ApplicationStatusSource;
 import org.sonatype.nexus.configuration.AbstractConfigurable;
@@ -46,8 +45,6 @@ import org.sonatype.nexus.configuration.model.CErrorReportingCoreConfiguration;
 import org.sonatype.nexus.configuration.model.ConfigurationHelper;
 import org.sonatype.nexus.util.StringDigester;
 import org.sonatype.plexus.encryptor.PlexusEncryptor;
-import org.sonatype.security.configuration.source.SecurityConfigurationSource;
-import org.sonatype.security.model.source.SecurityModelConfigurationSource;
 
 @Component( role = ErrorReportingManager.class )
 public class DefaultErrorReportingManager
@@ -60,14 +57,8 @@ public class DefaultErrorReportingManager
     @Requirement
     private NexusConfiguration nexusConfig;
 
-    @Requirement( role = SecurityModelConfigurationSource.class, hint = "file" )
-    private SecurityModelConfigurationSource securityXmlSource;
-
     @Requirement( role = ApplicationStatusSource.class )
     ApplicationStatusSource applicationStatus;
-
-    @Requirement( role = SecurityConfigurationSource.class, hint = "file" )
-    private SecurityConfigurationSource securityConfigurationXmlSource;
 
     @Requirement
     private ConfigurationHelper configHelper;
@@ -503,10 +494,6 @@ public class DefaultErrorReportingManager
         throws IOException
     {
         File nexusXml = new NexusXmlHandler().getFile( configHelper, nexusConfig );
-        File securityXml = new SecurityXmlHandler().getFile( securityXmlSource, nexusConfig );
-        File securityConfigurationXml =
-            new SecurityConfigurationXmlHandler().getFile( securityConfigurationXmlSource, nexusConfig );
-//        File fileListing = getFileListing(); //TODO: replace with FileUtil call
         File contextListing = getContextListing( request.getContext() );
         File exceptionListing = getExceptionListing( request.getThrowable() );
 
@@ -520,9 +507,6 @@ public class DefaultErrorReportingManager
             zStream = new ZipOutputStream( fStream );
 
             addFileToZip( nexusXml, zStream, "nexus.xml" );
-            addFileToZip( securityXml, zStream, "security.xml" );
-            addFileToZip( securityConfigurationXml, zStream, "security-configuration.xml" );
-//            addFileToZip( fileListing, zStream, "fileListing.txt" );
             addFileToZip( contextListing, zStream, "contextListing.txt" );
             addFileToZip( exceptionListing, zStream, "exception.txt" );
 
@@ -539,9 +523,6 @@ public class DefaultErrorReportingManager
         finally
         {
             deleteFile( nexusXml );
-            deleteFile( securityXml );
-            deleteFile( securityConfigurationXml );
-//            deleteFile( fileListing );
             deleteFile( contextListing );
             deleteFile( exceptionListing );
 
@@ -702,7 +683,7 @@ public class DefaultErrorReportingManager
     {
         if ( throwable != null )
         {
-            if ( throwable instanceof EofException )
+            if ( throwable.getClass().getName().equals( "org.mortbay.jetty.EofException" ) )
             {
                 return true;
 }
