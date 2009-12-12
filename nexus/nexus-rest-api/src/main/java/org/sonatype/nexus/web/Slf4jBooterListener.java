@@ -16,33 +16,14 @@ package org.sonatype.nexus.web;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import org.codehaus.plexus.PlexusConstants;
-import org.codehaus.plexus.PlexusContainer;
-import org.sonatype.nexus.Nexus;
-import org.sonatype.nexus.configuration.application.NexusConfiguration;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 
-public class NexusBooterListener
+public class Slf4jBooterListener
     implements ServletContextListener
 {
     public void contextInitialized( ServletContextEvent sce )
     {
-        try
-        {
-            PlexusContainer plexus =
-                (PlexusContainer) sce.getServletContext().getAttribute( PlexusConstants.PLEXUS_KEY );
-
-            Nexus nexus = plexus.lookup( Nexus.class );
-
-            sce.getServletContext().setAttribute( Nexus.class.getName(), nexus );
-
-            NexusConfiguration nexusConfiguration = plexus.lookup( NexusConfiguration.class );
-
-            sce.getServletContext().setAttribute( NexusConfiguration.class.getName(), nexusConfiguration );
-        }
-        catch ( Exception e )
-        {
-            throw new IllegalStateException( "Could not initialize Nexus.", e );
-        }
+        SLF4JBridgeHandler.install();
     }
 
     public void contextDestroyed( ServletContextEvent sce )

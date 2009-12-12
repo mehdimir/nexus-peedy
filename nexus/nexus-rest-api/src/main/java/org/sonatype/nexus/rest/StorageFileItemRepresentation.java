@@ -20,7 +20,6 @@ import java.net.SocketException;
 import java.util.Date;
 
 import org.codehaus.plexus.util.IOUtil;
-import org.mortbay.jetty.EofException;
 import org.restlet.data.MediaType;
 import org.restlet.data.Tag;
 import org.restlet.resource.OutputRepresentation;
@@ -73,13 +72,21 @@ public class StorageFileItemRepresentation
 
             IOUtil.copy( is, outputStream );
         }
-        catch ( EofException e )
-        {
-            // https://issues.sonatype.org/browse/NEXUS-217
-        }
         catch ( SocketException e )
         {
             // https://issues.sonatype.org/browse/NEXUS-217
+        }
+        catch ( IOException e )
+        {
+            if ( e.getClass().getName().equals( "org.mortbay.jetty.EofException" ) )
+            {
+                // https://issues.sonatype.org/browse/NEXUS-217
+            }
+            else
+            {
+                // rethrow it
+                throw e;
+            }
         }
         finally
         {
