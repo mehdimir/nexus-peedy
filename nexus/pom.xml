@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -133,26 +133,24 @@
     <module>nexus-configuration</module>
     <module>nexus-proxy</module>
     <module>nexus-app</module>
+    
+    <module>nexus-peedy-edition</module>
     <module>nexus-vaadin-ui</module>
     <module>nexus-remoting-api</module>
     <module>nexus-war</module>
 
-<!--
-    <module>nexus-core-plugins</module>
-    <module>nexus-mock</module>
-    <module>nexus-rest-api</module>
-    <module>nexus-migration-tool</module>
-    <module>nexus-webapp</module>
-    <module>nexus-clients</module>
-    <module>nexus-test-harness</module>
--->
+    <!--
+      <module>nexus-core-plugins</module>
+      <module>nexus-mock</module>
+      <module>nexus-rest-api</module>
+      <module>nexus-migration-tool</module>
+      <module>nexus-webapp</module>
+      <module>nexus-clients</module>
+      <module>nexus-test-harness</module>
+    -->
   </modules>
   <!-- Shortcuts for outnumbered deps :) -->
   <properties>
-    <!-- Shared with nexus-client, hence it is properties'ed -->
-    <plexus.restlet.bridge.version>1.13-SNAPSHOT</plexus.restlet.bridge.version>
-    <restlet.version>1.1.6-SONATYPE-5348</restlet.version>
-    <plexus-jetty6.version>1.7</plexus-jetty6.version>
     <plexus.appbooter.version>2.1.0</plexus.appbooter.version>
     <jsw.binaries.version>3.2.3.5</jsw.binaries.version>
     <slf4j.version>1.5.8</slf4j.version>
@@ -231,18 +229,8 @@
       </dependency>
       <dependency>
         <groupId>org.sonatype.plexus</groupId>
-        <artifactId>plexus-jetty6</artifactId>
-        <version>${plexus-jetty6.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.sonatype.plexus</groupId>
         <artifactId>plexus-task-scheduler</artifactId>
         <version>${plexus-task-scheduler.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.sonatype.plexus</groupId>
-        <artifactId>plexus-restlet-bridge</artifactId>
-        <version>${plexus.restlet.bridge.version}</version>
       </dependency>
       <dependency>
         <groupId>org.codehaus.plexus</groupId>
@@ -327,13 +315,6 @@
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>jcl-over-slf4j</artifactId>
-        <version>${slf4j.version}</version>
-        <type>jar</type>
-        <scope>runtime</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>jul-to-slf4j</artifactId>
         <version>${slf4j.version}</version>
         <type>jar</type>
         <scope>runtime</scope>
@@ -473,10 +454,6 @@
         </exclusions>
       </dependency>
 
-      <!--
-        dependency> <groupId>org.apache.maven.mercury</groupId> <artifactId>mercury-artifact</artifactId> <version>${mercury.version}</version> <exclusions> <exclusion> <groupId>org.codehaus.plexus</groupId> <artifactId>plexus-component-api</artifactId>
-        </exclusion> <exclusion> <groupId>org.slf4j</groupId> <artifactId>slf4j-jdk14</artifactId> </exclusion> </exclusions> </dependency -->
-
       <!-- Various commonly used deps -->
       <dependency>
         <groupId>org.apache.velocity</groupId>
@@ -512,17 +489,16 @@
         <version>2.1.2</version>
         <type>jar</type>
         <scope>compile</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.restlet</groupId>
-        <artifactId>org.restlet</artifactId>
-        <version>${restlet.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.noelios.restlet</groupId>
-        <artifactId>com.noelios.restlet</artifactId>
-        <version>${restlet.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+          </exclusion>
+          <exclusion>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
 
       <!-- Various deps -->
