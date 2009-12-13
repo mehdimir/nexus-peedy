@@ -15,7 +15,7 @@ public class RepositoriesFeature
 {
     public static final String HINT = "repositories";
 
-    @Requirement( role = UIComponent.class, hint = RepositoriesFeature.HINT )
+    @Requirement( role = UIComponent.class, hint = HINT )
     private RepositoriesUI repositoriesUI;
 
     @Override

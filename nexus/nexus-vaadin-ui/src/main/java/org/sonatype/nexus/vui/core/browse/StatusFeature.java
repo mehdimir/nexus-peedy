@@ -1,6 +1,8 @@
 package org.sonatype.nexus.vui.core.browse;
 
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
+import org.sonatype.nexus.Nexus;
 import org.sonatype.nexus.vui.AbstractFeature;
 import org.sonatype.nexus.vui.BrowseFeature;
 import org.sonatype.nexus.vui.Feature;
@@ -12,7 +14,10 @@ public class StatusFeature
     extends AbstractFeature
 {
     public static final String HINT = "status";
-    
+
+    @Requirement
+    private Nexus nexus;
+
     @Override
     public String getDescription()
     {
@@ -36,10 +41,11 @@ public class StatusFeature
         return null;
     }
 
+    @SuppressWarnings( "unchecked" )
     @Override
     public Class<? extends Feature>[] getRelatedFeatures()
     {
-        return null;
+        return new Class[] { WelcomeFeature.class, RepositoriesFeature.class };
     }
 
     @Override
@@ -51,7 +57,7 @@ public class StatusFeature
     @Override
     public com.vaadin.ui.Component getUI()
     {
-        return null;
+        return new StatusUI( nexus );
     }
 
 }
