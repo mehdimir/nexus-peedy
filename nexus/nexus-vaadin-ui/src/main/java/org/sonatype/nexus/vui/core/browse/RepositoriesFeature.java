@@ -54,8 +54,8 @@ public class RepositoriesFeature
     }
 
     @Override
-    public RepositoriesUI getUI()
+    public com.vaadin.ui.Component getUI()
     {
-        return repositoriesUI;
+        return repositoriesUI.getUI();
     }
 }

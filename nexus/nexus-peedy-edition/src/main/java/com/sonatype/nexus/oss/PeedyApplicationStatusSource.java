@@ -64,7 +64,7 @@ public class PeedyApplicationStatusSource
         
         systemStatus.setAppName( "NexusPEEDY" );
         
-        systemStatus.setEditionLong( "Personal Edition" );
+        systemStatus.setEditionLong( "Personal Speedy" );
         
         systemStatus.setEditionShort( "PEEDY" );
         

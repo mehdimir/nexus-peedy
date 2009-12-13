@@ -2,10 +2,10 @@ package org.sonatype.nexus.vui.core.browse;
 
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
-import org.sonatype.nexus.Nexus;
 import org.sonatype.nexus.vui.AbstractFeature;
 import org.sonatype.nexus.vui.BrowseFeature;
 import org.sonatype.nexus.vui.Feature;
+import org.sonatype.nexus.vui.UIComponent;
 import org.sonatype.nexus.vui.app.APIResource;
 import org.sonatype.nexus.vui.app.NamedExternalResource;
 
@@ -15,8 +15,8 @@ public class StatusFeature
 {
     public static final String HINT = "status";
 
-    @Requirement
-    private Nexus nexus;
+    @Requirement( role = UIComponent.class, hint = HINT )
+    private StatusUI statusUI;
 
     @Override
     public String getDescription()
@@ -57,7 +57,7 @@ public class StatusFeature
     @Override
     public com.vaadin.ui.Component getUI()
     {
-        return new StatusUI( nexus );
+        return statusUI.getUI();
     }
 
 }

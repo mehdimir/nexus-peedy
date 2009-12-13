@@ -250,7 +250,7 @@ public class FeatureView
             if ( features != null )
             {
                 VerticalLayout rel = new VerticalLayout();
-                Label caption = new Label( "<span>Related Samples</span>", Label.CONTENT_XHTML );
+                Label caption = new Label( "<span>Related pages</span>", Label.CONTENT_XHTML );
                 caption.setStyleName( "section" );
                 caption.setWidth( "100%" );
                 rel.addComponent( caption );

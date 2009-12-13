@@ -1,9 +1,11 @@
 package org.sonatype.nexus.vui.core.browse;
 
 import org.codehaus.plexus.component.annotations.Component;
+import org.codehaus.plexus.component.annotations.Requirement;
 import org.sonatype.nexus.vui.AbstractFeature;
 import org.sonatype.nexus.vui.BrowseFeature;
 import org.sonatype.nexus.vui.Feature;
+import org.sonatype.nexus.vui.UIComponent;
 import org.sonatype.nexus.vui.app.APIResource;
 import org.sonatype.nexus.vui.app.NamedExternalResource;
 
@@ -12,6 +14,9 @@ public class WelcomeFeature
     extends AbstractFeature
 {
     public static final String HINT = "welcome";
+
+    @Requirement( role = UIComponent.class, hint = HINT )
+    private WelcomeUI welcomeUI;
 
     @Override
     public String getDescription()
@@ -36,22 +41,27 @@ public class WelcomeFeature
         return null;
     }
 
+    @SuppressWarnings( "unchecked" )
     @Override
     public Class<? extends Feature>[] getRelatedFeatures()
     {
-        return null;
+        return new Class[] { StatusFeature.class };
     }
 
     @Override
     public NamedExternalResource[] getRelatedResources()
     {
-        return null;
+        return new NamedExternalResource[] {
+            new NamedExternalResource( "Nexus OSS Site", "http://nexus.sonatype.org/" ),
+            new NamedExternalResource( "Why do I need Nexus?", "http://nexus.sonatype.org/why-nexus.html" ),
+            new NamedExternalResource( "Nexus Professional", "http://www.sonatype.com/products/nexus" ),
+            new NamedExternalResource( "Sonatype", "http://www.sonatype.com/" ) };
     }
 
     @Override
     public com.vaadin.ui.Component getUI()
     {
-        return null;
+        return welcomeUI.getUI();
     }
 
 }
