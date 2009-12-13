@@ -1,0 +1,5 @@
+/* These styles get catenated together on build */
+@import "tabsheet-normal-style.css";
+@import "tabsheet-scroller.css";
+@import "tabsheet-minimal-style.css";
+@import "tabsheet-bar-style.css";

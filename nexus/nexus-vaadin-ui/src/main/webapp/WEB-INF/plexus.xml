@@ -1,0 +1,9 @@
+<plexus>
+
+  <load-on-start>
+  </load-on-start>
+
+  <components>
+  </components>
+
+</plexus>
