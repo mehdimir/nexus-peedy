@@ -20,6 +20,17 @@ This is short list of main goals
 * *potentially* serve as source of back-contributes patches to the TRUNK
 * ah, and speedy as Gonzales ;)
 
+## Summary of current changes
+
+* Java level raised to 1.6 (instead of 1.5 from trunk)
+* Security completely removed (and found a lot of littered security classes in Nexus modules while doing it)
+* removed all log4j bound and log4j needing features (and also, lot of littered related classes)
+* plexus container/classworlds/utils raised to latest ones
+* removed all Jetty dependencies
+* removed the nonsense plexus-ehcache usage, ehcache version raised to 1.7.1
+* using new (fixed) plexus-slf4j-logger manager, slf4j raised to 1.5.8
+* added new modules (Vaadin UI, Jersey REST API using Enunciate, WAR)
+
 ## Branches
 
 I used as manual a nice blog entry to create a "one way" mirror of SVN repository:
