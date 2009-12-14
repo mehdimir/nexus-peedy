@@ -30,6 +30,14 @@ This is short list of main goals
 * removed the nonsense plexus-ehcache usage, ehcache version raised to 1.7.1
 * using new (fixed) plexus-slf4j-logger manager, slf4j raised to 1.5.8
 * added new modules (Vaadin UI, Jersey REST API using Enunciate, WAR)
+* cleaned up dependencies
+
+Just as an example, here are the results of "dependency cleanup": the size of the Nexus OSS WAR: 14.4MB. 
+The size of NexusPEEDY WAR: 12.6. Size of "bundle" of Nexus OSS: 15.1MB. The size
+of NexusPEEDY "bundle": 13.2MB. *Note*: This comparison is only to show size differences,
+but in reality, the build results of nexus-webapp module in NexusPEEDY does not make any 
+sense, it is even taken out of reactor build! NexusPEEDY adds new modules for building the
+final artifact!
 
 ## Branches
 
