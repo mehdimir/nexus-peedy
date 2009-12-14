@@ -853,6 +853,15 @@
           <artifactId>maven-runtime-assembler-plugin</artifactId>
           <version>${runtime-assembler.version}</version>
         </plugin>
+        <!--For testing purposes-->
+        <plugin>
+          <groupId>org.mortbay.jetty</groupId>
+          <artifactId>maven-jetty-plugin</artifactId>
+          <version>6.1.22</version>
+          <configuration>
+            <useTestClasspath>true</useTestClasspath>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
