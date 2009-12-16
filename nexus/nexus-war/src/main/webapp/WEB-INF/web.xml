@@ -108,6 +108,14 @@
       <param-value>false</param-value>
     </init-param>
     <init-param>
+      <param-name>com.sun.jersey.config.property.classpath</param-name>
+      <param-value>/WEB-INF/classes</param-value>
+    </init-param>
+    <init-param>
+      <param-name>org.codehaus.enunciate.modules.jersey.config.ResourceProviderFactory</param-name>
+      <param-value>org.sonatype.nexus.remote.plexus.PlexusComponentProviderFactory</param-value>
+    </init-param>
+    <init-param>
       <param-name>org.codehaus.enunciate.modules.jersey.config.ServletPath</param-name>
       <param-value>/rest</param-value>
     </init-param>

@@ -117,7 +117,7 @@ public class PlexusContainerContextListener
         response.put( getClass().getName(), this );
 
         // put in the basedir for plexus apps backward compat
-        response.put( "basedir", response.getBasedir().getAbsoluteFile() );
+        response.put( "basedir", response.getBasedir().getAbsolutePath() );
 
         // wrap it in, to make Plexus friendly
         return response;

@@ -28,7 +28,7 @@
     </jaxws-client>
 
     <jersey disabled="false" usePathBasedConneg="false">
-      <init-param name="key" value="value" />
+      <init-param name="org.codehaus.enunciate.modules.jersey.config.ResourceProviderFactory" value="org.sonatype.nexus.remote.plexus.PlexusComponentProviderFactory" />
     </jersey>
 
     <docs disabled="false" title="Sonatype Nexus Remote API">
