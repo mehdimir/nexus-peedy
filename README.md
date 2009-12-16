@@ -39,6 +39,26 @@ but in reality, the build results of nexus-webapp module in NexusPEEDY does not 
 sense, it is even taken out of reactor build! NexusPEEDY adds new modules for building the
 final artifact!
 
+## How to build it
+
+Note: if your local repository contains "official" Nexus snapshot artifacts, due to the [MNG-4368](http://jira.codehaus.org/browse/MNG-4368) issue, you MUST use separate local repository to build this beast!
+
+### Prerequisites
+
+* Java6 and Maven3 ;)
+
+* Your Maven settings set up in same was as is needed for Nexus OSS build.
+
+* Build Plexus Loggers from trunk. They contain a [fix](http://fisheye.codehaus.org/changelog/plexus/?cs=8566) that is not yet released.
+  
+  Checkout from [Plexus Repository](http://svn.codehaus.org/plexus/archive/plexus-logging/trunk/) and "mvn clean install".
+
+* Build modded Enunciate (although Ryan already incorporated the needed [changes](http://jira.codehaus.org/browse/ENUNCIATE-385) into it's trunk.
+
+  Checkout from [Enunciate GIT](http://github.com/cstamas/enunciate/) and "mvn clean install".
+  
+* Checkout nexus-peedy and build.
+
 ## Branches
 
 I used as manual a nice blog entry to create a "one way" mirror of SVN repository:
