@@ -20,6 +20,11 @@ This is short list of main goals
 * *potentially* serve as source of back-contributes patches to the TRUNK
 * ah, and speedy as Gonzales ;)
 
+## Further goals
+
+* have Simpleframework instead of Jetty ;)
+* have SimpleXml instead of Modello (and all the "config crap" I did. Mea Culpa for that!)
+
 ## Summary of current changes
 
 * Java level raised to 1.6 (instead of 1.5 from trunk)
