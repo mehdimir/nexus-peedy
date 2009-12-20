@@ -28,5 +28,6 @@ public class Slf4jBooterListener
 
     public void contextDestroyed( ServletContextEvent sce )
     {
+        SLF4JBridgeHandler.uninstall();
     }
 }

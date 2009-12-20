@@ -20,7 +20,8 @@ import org.sonatype.appcontext.PropertiesFileContextFiller;
 import org.sonatype.appcontext.SimpleBasedirDiscoverer;
 
 /**
- * Boots up Plexus in webapp.
+ * Boots up Plexus in webapp. It is safe to have it multiple times executed, since it will create only once, or reuse
+ * the found container.
  * 
  * @author cstamas
  */
@@ -43,25 +44,29 @@ public class PlexusContainerContextListener
     {
         ServletContext context = sce.getServletContext();
 
-        try
+        // create a container if there is none yet
+        if ( context.getAttribute( PlexusConstants.PLEXUS_KEY ) == null )
         {
-            AppContext plexusContext = createContainerContext( context );
+            try
+            {
+                AppContext plexusContext = createContainerContext( context );
 
-            ContainerConfiguration plexusConfiguration =
-                new DefaultContainerConfiguration().setName( context.getServletContextName() )
-                    .setContainerConfigurationURL(
-                        buildConfigurationURL( context, PLEXUS_CONFIG_PARAM, DEFAULT_PLEXUS_CONFIG ) ).setContext(
-                        plexusContext );
+                ContainerConfiguration plexusConfiguration =
+                    new DefaultContainerConfiguration().setName( context.getServletContextName() )
+                        .setContainerConfigurationURL(
+                            buildConfigurationURL( context, PLEXUS_CONFIG_PARAM, DEFAULT_PLEXUS_CONFIG ) ).setContext(
+                            plexusContext );
 
-            plexusContainer = new DefaultPlexusContainer( plexusConfiguration );
+                plexusContainer = new DefaultPlexusContainer( plexusConfiguration );
 
-            context.setAttribute( PlexusConstants.PLEXUS_KEY, plexusContainer );
-        }
-        catch ( Exception e )
-        {
-            sce.getServletContext().log( "Could not start Plexus container!", e );
+                context.setAttribute( PlexusConstants.PLEXUS_KEY, plexusContainer );
+            }
+            catch ( Exception e )
+            {
+                sce.getServletContext().log( "Could not start Plexus container!", e );
 
-            throw new IllegalStateException( "Could not start Plexus container!", e );
+                throw new IllegalStateException( "Could not start Plexus container!", e );
+            }
         }
     }
 
@@ -124,7 +129,7 @@ public class PlexusContainerContextListener
     }
 
     private URL buildConfigurationURL( final ServletContext servletContext, final String paramKey,
-        final String defaultValue )
+                                       final String defaultValue )
     {
         String plexusConfigPath = servletContext.getInitParameter( paramKey );
 

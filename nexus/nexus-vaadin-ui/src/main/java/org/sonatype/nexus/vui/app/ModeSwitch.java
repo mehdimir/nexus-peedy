@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.NativeButton;
@@ -73,19 +74,21 @@ public class ModeSwitch extends CustomComponent {
         updateStyles();
     }
 
-    @SuppressWarnings("unchecked")
     private void updateStyles() {
         boolean first = true;
-        for (Iterator<Button> it = layout.getComponentIterator(); it.hasNext();) {
-            Button b = it.next();
-            String isOn = (b.getData() == mode ? "-on" : "");
-            if (first) {
-                first = false;
-                b.setStyleName("first" + isOn);
-            } else if (!it.hasNext()) {
-                b.setStyleName("last" + isOn);
-            } else {
-                b.setStyleName("mid" + isOn);
+        for (Iterator<Component> it = layout.getComponentIterator(); it.hasNext();) {
+            Component c = it.next();
+            if (c instanceof Button) {
+                Button b = (Button) c;
+                String isOn = (b.getData() == mode ? "-on" : "");
+                if (first) {
+                    first = false;
+                    b.setStyleName("first" + isOn);
+                } else if (!it.hasNext()) {
+                    b.setStyleName("last" + isOn);
+                } else {
+                    b.setStyleName("mid" + isOn);
+                }
             }
         }
     }
