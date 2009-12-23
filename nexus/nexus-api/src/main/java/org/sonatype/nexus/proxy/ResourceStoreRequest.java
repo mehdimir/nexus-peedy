@@ -88,7 +88,7 @@ public class ResourceStoreRequest
     {
         this( item.getRepositoryItemUid().getPath(), true, false );
 
-        this.requestContext = item.getItemContext();
+        this.requestContext = new RequestContext( item.getItemContext() );
     }
 
     /**
@@ -212,7 +212,7 @@ public class ResourceStoreRequest
      */
     public List<String> getProcessedRepositories()
     {
-        return Collections.unmodifiableList( processedRepositories);
+        return Collections.unmodifiableList( processedRepositories );
     }
 
     /**
