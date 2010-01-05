@@ -37,7 +37,7 @@ public class ContextUtils
     {
         if ( context != null && context.containsKey( key ) )
         {
-            if ( context.get( key ) instanceof Collection )
+            if ( context.get( key ) instanceof Collection<?> )
             {
                 Collection<?> coll = (Collection<?>) context.get( key );
 

@@ -18,7 +18,7 @@
   <name>Nexus (Remoting API)</name>
 
   <properties>
-    <enunciate.version>1.17-SNAPSHOT</enunciate.version>
+    <enunciate.version>1.17</enunciate.version>
   </properties>
 
   <dependencies>

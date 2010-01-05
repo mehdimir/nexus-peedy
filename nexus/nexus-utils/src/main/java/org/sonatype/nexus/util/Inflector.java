@@ -150,7 +150,7 @@ public class Inflector
         return pluralize( underscore( className ) );
     }
 
-    public String tableize( Class klass )
+    public String tableize( Class<?> klass )
     {
         // Strip away package name - we only want the 'base' class name.
         String className = klass.getName().replace( klass.getPackage().getName() + ".", "" );
