@@ -574,8 +574,6 @@ public abstract class AbstractResourceStoreContentPlexusResource
         result.addProperty( "remoteUrl=" + item.getRemoteUrl() );
         result.addProperty( "storedLocally=" + item.getStoredLocally() );
         result.addProperty( "isExpired=" + item.isExpired() );
-        result.addProperty( "readable=" + item.isReadable() );
-        result.addProperty( "writable=" + item.isWritable() );
         result.addProperty( "virtual=" + item.isVirtual() );
 
         // attributes

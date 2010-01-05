@@ -94,7 +94,7 @@ public class ArtifactStoreHelper
 
                 getMavenRepository().storeItem(
                     false,
-                    new DefaultStorageFileItem( getMavenRepository(), request, true, true, new StringContentLocator(
+                    new DefaultStorageFileItem( getMavenRepository(), request, new StringContentLocator(
                         sha1Hash ) ) );
             }
 
@@ -104,7 +104,7 @@ public class ArtifactStoreHelper
 
                 getMavenRepository().storeItem(
                     false,
-                    new DefaultStorageFileItem( getMavenRepository(), request, true, true, new StringContentLocator(
+                    new DefaultStorageFileItem( getMavenRepository(), request, new StringContentLocator(
                         md5Hash ) ) );
             }
         }
@@ -207,7 +207,7 @@ public class ArtifactStoreHelper
 
                 getMavenRepository().storeItem(
                     false,
-                    new DefaultStorageFileItem( getMavenRepository(), req, true, true, new StringContentLocator(
+                    new DefaultStorageFileItem( getMavenRepository(), req, new StringContentLocator(
                         sha1Hash ) ) );
             }
 
@@ -217,7 +217,7 @@ public class ArtifactStoreHelper
 
                 getMavenRepository().storeItem(
                     false,
-                    new DefaultStorageFileItem( getMavenRepository(), req, true, true, new StringContentLocator(
+                    new DefaultStorageFileItem( getMavenRepository(), req, new StringContentLocator(
                         md5Hash ) ) );
             }
         }

@@ -19,22 +19,21 @@ package org.sonatype.nexus.proxy;
  * @author cstamas
  */
 public abstract class AuthorizationException
-    extends Exception
+    extends StorageException
 {
     private static final long serialVersionUID = 391662938886542734L;
 
-    public AuthorizationException( String message )
+    private final ResourceStoreRequest request;
+
+    public AuthorizationException( String message, ResourceStoreRequest request )
     {
         super( message );
+
+        this.request = request;
     }
 
-    public AuthorizationException( String message, Throwable cause )
+    public ResourceStoreRequest getRequest()
     {
-        super( message, cause );
-    }
-
-    public AuthorizationException( Throwable cause )
-    {
-        super( cause );
+        return request;
     }
 }

@@ -25,29 +25,8 @@ public class AccessDeniedException
 {
     private static final long serialVersionUID = 8341250956517740603L;
 
-    private final ResourceStoreRequest request;
-
-    public AccessDeniedException( String msg )
-    {
-        super( msg );
-
-        this.request = null;
-    }
-
     public AccessDeniedException( ResourceStoreRequest request, String msg )
     {
-        super( msg );
-
-        this.request = request;
-    }
-
-    /**
-     * The RepositoryItemUid that is forbidden to access.
-     * 
-     * @return
-     */
-    public ResourceStoreRequest getResourceStoreRequest()
-    {
-        return this.request;
+        super( msg, request );
     }
 }

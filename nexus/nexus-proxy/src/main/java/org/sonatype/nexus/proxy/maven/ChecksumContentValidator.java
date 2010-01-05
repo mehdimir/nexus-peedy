@@ -12,7 +12,6 @@ import org.codehaus.plexus.util.StringUtils;
 import org.sonatype.nexus.artifact.NexusItemInfo;
 import org.sonatype.nexus.feeds.NexusArtifactEvent;
 import org.sonatype.nexus.proxy.ItemNotFoundException;
-import org.sonatype.nexus.proxy.RemoteAccessException;
 import org.sonatype.nexus.proxy.ResourceStoreRequest;
 import org.sonatype.nexus.proxy.StorageException;
 import org.sonatype.nexus.proxy.attributes.inspectors.DigestCalculatingInspector;
@@ -176,11 +175,8 @@ public class ChecksumContentValidator
             // TODO should we remove bad checksum if policy==WARN?
             try
             {
-                proxy.getLocalStorage().deleteItem(
-                                                    proxy,
-                                                    new ResourceStoreRequest(
-                                                                              hashItem.getRepositoryItemUid().getPath(),
-                                                                              true ) );
+                proxy.getLocalStorage().deleteItem( proxy,
+                    new ResourceStoreRequest( hashItem.getRepositoryItemUid().getPath(), true ) );
             }
             catch ( ItemNotFoundException e )
             {
@@ -201,20 +197,9 @@ public class ChecksumContentValidator
     }
 
     private DefaultStorageFileItem doRetriveRemoteChecksumItem( ProxyRepository proxy, ResourceStoreRequest request )
-        throws ItemNotFoundException
+        throws ItemNotFoundException, StorageException
     {
-        try
-        {
-            return (DefaultStorageFileItem) proxy.getRemoteStorage().retrieveItem( proxy, request, proxy.getRemoteUrl() );
-        }
-        catch ( RemoteAccessException e )
-        {
-            throw new ItemNotFoundException( request, proxy, e );
-        }
-        catch ( StorageException e )
-        {
-            throw new ItemNotFoundException( request, proxy, e );
-        }
+        return (DefaultStorageFileItem) proxy.getRemoteStorage().retrieveItem( proxy, request, proxy.getRemoteUrl() );
     }
 
     private NexusArtifactEvent newChechsumFailureEvent( AbstractStorageItem item, String msg )

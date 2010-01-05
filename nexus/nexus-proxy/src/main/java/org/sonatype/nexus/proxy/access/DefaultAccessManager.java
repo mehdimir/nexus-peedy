@@ -37,7 +37,7 @@ public class DefaultAccessManager
         if ( !nexusItemAuthorizer.authorizePath( repository, request, action ) )
         {
             // deny the access
-            throw new AccessDeniedException( "Access denied on repository ID='" + repository.getId() + "', path='"
+            throw new AccessDeniedException( request, "Access denied on repository ID='" + repository.getId() + "', path='"
                 + request.getRequestPath() + "', action='" + action + "'!" );
         }
     }

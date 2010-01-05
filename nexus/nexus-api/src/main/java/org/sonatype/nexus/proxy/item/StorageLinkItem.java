@@ -33,5 +33,4 @@ public interface StorageLinkItem
      * @param target
      */
     void setTarget( RepositoryItemUid target );
-
 }

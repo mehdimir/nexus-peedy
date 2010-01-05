@@ -50,10 +50,20 @@ public abstract class AbstractStorageItem
     /** The path. */
     private String path;
 
-    /** The readable. */
+    /**
+     * This is here for backward compatibility only, to enable XStream to load up the old XML attributes.
+     * 
+     * @deprecated The readable is not used.
+     */
+    @SuppressWarnings( "unused" )
     private boolean readable;
 
-    /** The writable. */
+    /**
+     * This is here for backward compatibility only, to enable XStream to load up the old XML attributes.
+     * 
+     * @deprecated The writable is not used.
+     */
+    @SuppressWarnings( "unused" )
     private boolean writable;
 
     /** The repository id. */
@@ -91,14 +101,12 @@ public abstract class AbstractStorageItem
      * @param readable the readable
      * @param writable the writable
      */
-    public AbstractStorageItem( ResourceStoreRequest request, boolean readable, boolean writable )
+    private AbstractStorageItem( ResourceStoreRequest request )
     {
         super();
         setPath( request.getRequestPath() );
         this.request = request;
         this.context = new RequestContext( request.getRequestContext() );
-        this.readable = readable;
-        this.writable = writable;
         this.expired = false;
         this.created = System.currentTimeMillis();
         this.modified = this.created;
@@ -112,9 +120,9 @@ public abstract class AbstractStorageItem
      * @param readable the readable
      * @param writable the writable
      */
-    public AbstractStorageItem( Repository repository, ResourceStoreRequest request, boolean readable, boolean writable )
+    public AbstractStorageItem( Repository repository, ResourceStoreRequest request )
     {
-        this( request, readable, writable );
+        this( request );
         this.store = repository;
         this.repositoryItemUid = repository.createUid( path );
         this.repositoryId = repository.getId();
@@ -129,10 +137,9 @@ public abstract class AbstractStorageItem
      * @param readable the readable
      * @param writable the writable
      */
-    public AbstractStorageItem( RepositoryRouter router, ResourceStoreRequest request, boolean readable,
-        boolean writable )
+    public AbstractStorageItem( RepositoryRouter router, ResourceStoreRequest request )
     {
-        this( request, readable, writable );
+        this( request );
         this.store = router;
         this.repositoryItemUid = null;
         this.repositoryId = null;
@@ -146,6 +153,20 @@ public abstract class AbstractStorageItem
     public ResourceStore getStore()
     {
         return this.store;
+    }
+
+    public Repository getRepository()
+    {
+        ResourceStore store = getStore();
+
+        if ( store instanceof Repository )
+        {
+            return (Repository) store;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -166,11 +187,11 @@ public abstract class AbstractStorageItem
     {
         return request;
     }
-    
-    public void setResourceStoreRequest(ResourceStoreRequest request)
+
+    public void setResourceStoreRequest( ResourceStoreRequest request )
     {
         this.request = request;
-        
+
         this.context = new RequestContext( request.getRequestContext() );
     }
 
@@ -240,36 +261,6 @@ public abstract class AbstractStorageItem
         this.modified = modified;
     }
 
-    public boolean isReadable()
-    {
-        return readable;
-    }
-
-    /**
-     * Sets the readable.
-     * 
-     * @param readable the new readable
-     */
-    public void setReadable( boolean readable )
-    {
-        this.readable = readable;
-    }
-
-    public boolean isWritable()
-    {
-        return writable;
-    }
-
-    /**
-     * Sets the writable.
-     * 
-     * @param writable the new writable
-     */
-    public void setWritable( boolean writable )
-    {
-        this.writable = writable;
-    }
-
     public String getPath()
     {
         return path;
@@ -298,6 +289,11 @@ public abstract class AbstractStorageItem
     public void setExpired( boolean expired )
     {
         this.expired = expired;
+    }
+
+    public boolean isFound()
+    {
+        return !( this instanceof StorageNotFoundItem );
     }
 
     public String getName()

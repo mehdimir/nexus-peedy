@@ -15,10 +15,7 @@ package org.sonatype.nexus.proxy.item;
 
 import java.util.Collection;
 
-import org.sonatype.nexus.proxy.AccessDeniedException;
-import org.sonatype.nexus.proxy.IllegalOperationException;
 import org.sonatype.nexus.proxy.ItemNotFoundException;
-import org.sonatype.nexus.proxy.NoSuchResourceStoreException;
 import org.sonatype.nexus.proxy.StorageException;
 
 /**
@@ -34,10 +31,5 @@ public interface StorageCollectionItem
      * @return the collection< storage item>
      */
     Collection<StorageItem> list()
-        throws AccessDeniedException,
-            NoSuchResourceStoreException,
-            IllegalOperationException,
-            ItemNotFoundException,
-            StorageException;;
-
+        throws ItemNotFoundException, StorageException;
 }

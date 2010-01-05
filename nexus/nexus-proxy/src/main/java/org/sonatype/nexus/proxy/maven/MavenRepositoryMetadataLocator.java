@@ -117,7 +117,7 @@ public class MavenRepositoryMetadataLocator
             null, // hashType
             false, // signature
             null // signatureType
-        );
+            );
 
         return pomGav;
     }
@@ -167,8 +167,7 @@ public class MavenRepositoryMetadataLocator
     }
 
     private String getPackaging( Reader reader )
-        throws XmlPullParserException,
-            IOException
+        throws XmlPullParserException, IOException
     {
         String packaging = "jar";
 
@@ -358,16 +357,14 @@ public class MavenRepositoryMetadataLocator
     }
 
     protected Metadata readOrCreateMetadata( RepositoryItemUid uid, ArtifactStoreRequest request )
-        throws IllegalOperationException,
-            IOException,
-            MetadataException
+        throws IllegalOperationException, IOException, MetadataException
     {
         Metadata result = null;
 
         String storedPath = request.getRequestPath();
-        
+
         try
-        {            
+        {
             request.setRequestPath( uid.getPath() );
 
             StorageItem item = uid.getRepository().retrieveItem( false, request );
@@ -407,10 +404,7 @@ public class MavenRepositoryMetadataLocator
     }
 
     protected void writeMetadata( RepositoryItemUid uid, Map<String, Object> ctx, Metadata md )
-        throws IllegalOperationException,
-            UnsupportedStorageOperationException,
-            MetadataException,
-            IOException
+        throws IllegalOperationException, UnsupportedStorageOperationException, MetadataException, IOException
     {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
@@ -420,16 +414,15 @@ public class MavenRepositoryMetadataLocator
 
         outputStream.close();
 
-        DefaultStorageFileItem file = new DefaultStorageFileItem( uid.getRepository(), new ResourceStoreRequest( uid
-            .getPath() ), true, true, new StringContentLocator( mdString ) );
+        DefaultStorageFileItem file =
+            new DefaultStorageFileItem( uid.getRepository(), new ResourceStoreRequest( uid.getPath() ),
+                new StringContentLocator( mdString ) );
 
         ( (MavenRepository) uid.getRepository() ).storeItemWithChecksums( false, file );
     }
 
     protected Metadata readOrCreateGAVMetadata( ArtifactStoreRequest request, Gav gav )
-        throws IllegalOperationException,
-            IOException,
-            MetadataException
+        throws IllegalOperationException, IOException, MetadataException
     {
         String mdPath = request.getRequestPath();
 
@@ -450,9 +443,7 @@ public class MavenRepositoryMetadataLocator
     }
 
     protected Metadata readOrCreateGAMetadata( ArtifactStoreRequest request, Gav gav )
-        throws IllegalOperationException,
-            IOException,
-            MetadataException
+        throws IllegalOperationException, IOException, MetadataException
     {
         String mdPath = request.getRequestPath();
 
@@ -476,9 +467,7 @@ public class MavenRepositoryMetadataLocator
     }
 
     protected Metadata readOrCreateGMetadata( ArtifactStoreRequest request, Gav gav )
-        throws IllegalOperationException,
-            IOException,
-            MetadataException
+        throws IllegalOperationException, IOException, MetadataException
     {
         String mdPath = request.getRequestPath();
 
@@ -505,10 +494,7 @@ public class MavenRepositoryMetadataLocator
     }
 
     protected void writeGAVMetadata( ArtifactStoreRequest request, Gav gav, Metadata md )
-        throws UnsupportedStorageOperationException,
-            IllegalOperationException,
-            MetadataException,
-            IOException
+        throws UnsupportedStorageOperationException, IllegalOperationException, MetadataException, IOException
     {
         String mdPath = request.getRequestPath();
 
@@ -521,29 +507,23 @@ public class MavenRepositoryMetadataLocator
     }
 
     protected void writeGAMetadata( ArtifactStoreRequest request, Gav gav, Metadata md )
-        throws UnsupportedStorageOperationException,
-            IllegalOperationException,
-            MetadataException,
-            IOException
+        throws UnsupportedStorageOperationException, IllegalOperationException, MetadataException, IOException
     {
         String mdPath = request.getRequestPath();
 
         // GAV
         mdPath = mdPath.substring( 0, mdPath.lastIndexOf( RepositoryItemUid.PATH_SEPARATOR ) );
-        
+
         // GA
         mdPath = mdPath.substring( 0, mdPath.lastIndexOf( RepositoryItemUid.PATH_SEPARATOR ) ) + "/maven-metadata.xml";
-        
+
         RepositoryItemUid uid = request.getMavenRepository().createUid( mdPath );
 
         writeMetadata( uid, request.getRequestContext(), md );
     }
 
     protected void writeGMetadata( ArtifactStoreRequest request, Gav gav, Metadata md )
-        throws UnsupportedStorageOperationException,
-            IllegalOperationException,
-            MetadataException,
-            IOException
+        throws UnsupportedStorageOperationException, IllegalOperationException, MetadataException, IOException
     {
         String mdPath = request.getRequestPath();
 
@@ -552,7 +532,7 @@ public class MavenRepositoryMetadataLocator
 
         // GA
         mdPath = mdPath.substring( 0, mdPath.lastIndexOf( RepositoryItemUid.PATH_SEPARATOR ) );
-        
+
         // G
         mdPath = mdPath.substring( 0, mdPath.lastIndexOf( RepositoryItemUid.PATH_SEPARATOR ) ) + "/maven-metadata.xml";
 

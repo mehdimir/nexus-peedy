@@ -225,8 +225,6 @@ public class DefaultAttributeStorage
 
                     // and overlay other things too
                     onDisk.setRepositoryItemUid( item.getRepositoryItemUid() );
-                    onDisk.setReadable( item.isReadable() );
-                    onDisk.setWritable( item.isWritable() );
 
                     item = onDisk;
                 }

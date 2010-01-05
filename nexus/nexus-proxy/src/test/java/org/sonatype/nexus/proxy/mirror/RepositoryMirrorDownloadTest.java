@@ -35,6 +35,7 @@ import org.sonatype.nexus.configuration.model.DefaultCRepository;
 import org.sonatype.nexus.proxy.AbstractNexusTestEnvironment;
 import org.sonatype.nexus.proxy.InvalidItemContentException;
 import org.sonatype.nexus.proxy.ItemNotFoundException;
+import org.sonatype.nexus.proxy.RemoteAccessDeniedException;
 import org.sonatype.nexus.proxy.RemoteAccessException;
 import org.sonatype.nexus.proxy.ResourceStoreRequest;
 import org.sonatype.nexus.proxy.StorageException;
@@ -67,7 +68,7 @@ public class RepositoryMirrorDownloadTest
     private static final String CANONICAL_URL = "http://canonical-url";
 
     private static final ItemNotFoundException itemNotFount =
-        new ItemNotFoundException( new ResourceStoreRequest( ITEM_PATH ) );
+        new ItemNotFoundException( new ResourceStoreRequest( ITEM_PATH ), null );
 
     private static final StorageException storageException = new StorageException( ITEM_PATH );
 
@@ -77,12 +78,10 @@ public class RepositoryMirrorDownloadTest
 
     private static final String ITEM_BAD_SHA1_HASH = "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
 
-    private static final RemoteAccessException accessDenied = new RemoteAccessException( null, ITEM_PATH )
-    {
+    private static final RemoteAccessException accessDenied = new RemoteAccessDeniedException( null, null, null );
 
-    };
-
-    private static final InvalidItemContentException invalidContent = new InvalidItemContentException( ITEM_PATH, null );
+    private static final InvalidItemContentException invalidContent =
+        new InvalidItemContentException( new ResourceStoreRequest( ITEM_PATH ), MIRROR1 );
 
     // this is crazy...
     private static class AssertionRequest
@@ -439,8 +438,7 @@ public class RepositoryMirrorDownloadTest
     {
         ContentLocator content = new ByteArrayContentLocator( bytes, getMimeUtil().getMimeType( uid.getPath() ) );
         DefaultStorageFileItem item =
-            new DefaultStorageFileItem( uid.getRepository(), new ResourceStoreRequest( uid.getPath() ), true, false,
-                content );
+            new DefaultStorageFileItem( uid.getRepository(), new ResourceStoreRequest( uid.getPath() ), content );
         if ( bytes.length == 0 )
         {
             item.getAttributes().put( "digest.sha1", ITEM_SHA1_HASH );

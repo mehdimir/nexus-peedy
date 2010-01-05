@@ -20,12 +20,24 @@ package org.sonatype.nexus.proxy.access;
  */
 public enum Action
 {
+    /**
+     * Reading any content.
+     */
     read,
 
+    /**
+     * Creating any content.
+     */
     create,
 
+    /**
+     * Update, as overwriting existing content.
+     */
     update,
 
+    /**
+     * Deleting any content.
+     */
     delete;
 
     public boolean isReadAction()

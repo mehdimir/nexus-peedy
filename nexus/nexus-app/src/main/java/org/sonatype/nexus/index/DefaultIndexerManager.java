@@ -1650,7 +1650,7 @@ public class DefaultIndexerManager
             fis = new FileInputStream( file );
 
             DefaultStorageFileItem fItem =
-                new DefaultStorageFileItem( repository, path, true, true, new PreparedContentLocator( fis, mimeUtil
+                new DefaultStorageFileItem( repository, new ResourceStoreRequest( path ), new PreparedContentLocator( fis, mimeUtil
                     .getMimeType( file ) ) );
 
             if ( context.getTimestamp() == null )

@@ -45,25 +45,22 @@ public class LinkTest
 
         Repository repo1 = getRepositoryRegistry().getRepository( "repo1" );
 
-        DefaultStorageFileItem file = new DefaultStorageFileItem(
-            repo1,
-            "/a.txt",
-            true,
-            true,
-            new StringContentLocator( contentString ) );
+        DefaultStorageFileItem file =
+            new DefaultStorageFileItem( repo1, new ResourceStoreRequest( "/a.txt" ), new StringContentLocator(
+                contentString ) );
         file.getAttributes().put( "attr1", "ATTR1" );
         repo1.storeItem( false, file );
 
-        DefaultStorageLinkItem link = new DefaultStorageLinkItem( repo1, "/b.txt", true, true, file
-            .getRepositoryItemUid() );
+        DefaultStorageLinkItem link =
+            new DefaultStorageLinkItem( repo1, new ResourceStoreRequest( "/b.txt" ), file.getRepositoryItemUid() );
         repo1.getLocalStorage().storeItem( repo1, link );
 
         StorageItem item = repo1.retrieveItem( new ResourceStoreRequest( "/b.txt", true ) );
         assertEquals( DefaultStorageLinkItem.class, item.getClass() );
 
-        StorageFileItem item1 = (StorageFileItem) repo1.retrieveItem( false, new ResourceStoreRequest(
-            ( (StorageLinkItem) item ).getTarget().getPath(),
-            false ) );
+        StorageFileItem item1 =
+            (StorageFileItem) repo1.retrieveItem( false, new ResourceStoreRequest( ( (StorageLinkItem) item )
+                .getTarget().getPath(), false ) );
 
         assertStorageFileItem( item1 );
         assertTrue( contentEquals( item1.getInputStream(), new ByteArrayInputStream( contentString.getBytes() ) ) );

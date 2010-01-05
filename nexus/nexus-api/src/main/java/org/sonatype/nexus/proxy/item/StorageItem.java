@@ -16,13 +16,30 @@ package org.sonatype.nexus.proxy.item;
 import java.util.Map;
 
 import org.sonatype.nexus.proxy.RequestContext;
+import org.sonatype.nexus.proxy.ResourceStore;
 import org.sonatype.nexus.proxy.ResourceStoreRequest;
+import org.sonatype.nexus.proxy.repository.Repository;
 
 /**
  * The Interface StorageItem, a top of the item abstraction.
  */
 public interface StorageItem
 {
+    /**
+     * Gets the originating ResourceStore. This may be a repository or a router.
+     * 
+     * @return
+     */
+    ResourceStore getStore();
+
+    /**
+     * Gets the originating Repository. This is actually a helper method, that calls into getStore() and returns the
+     * value only if it is not null and is instance of Repository.
+     * 
+     * @return
+     */
+    Repository getRepository();
+
     /**
      * The request.
      * 
@@ -108,25 +125,11 @@ public interface StorageItem
     void setLastRequested( long ts );
 
     /**
-     * Checks if is virtual.
+     * Checks if is virtual. Virtual items are not backed by any storage directly, they are generated.
      * 
      * @return true, if is virtual
      */
     boolean isVirtual();
-
-    /**
-     * Checks if is readable.
-     * 
-     * @return true, if is readable
-     */
-    boolean isReadable();
-
-    /**
-     * Checks if is writable.
-     * 
-     * @return true, if is writable
-     */
-    boolean isWritable();
 
     /**
      * Returns true if the item is expired.
@@ -137,6 +140,13 @@ public interface StorageItem
      * Sets if the item is expired.
      */
     void setExpired( boolean expired );
+
+    /**
+     * Returns true if the item is existing.
+     * 
+     * @return
+     */
+    boolean isFound();
 
     /**
      * Gets the path.

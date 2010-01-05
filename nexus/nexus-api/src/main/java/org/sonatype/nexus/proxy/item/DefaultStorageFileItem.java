@@ -41,6 +41,7 @@ public class DefaultStorageFileItem
      * 
      * @deprecated The mime-type is now coming from ContentLocator, see getMimeType() method body.
      */
+    @SuppressWarnings( "unused" )
     private String mimeType;
 
     /**
@@ -52,27 +53,10 @@ public class DefaultStorageFileItem
      * @param canWrite the can write
      * @param contentLocator the content locator
      */
-    public DefaultStorageFileItem( Repository repository, ResourceStoreRequest request, boolean canRead,
-                                   boolean canWrite, ContentLocator contentLocator )
+    public DefaultStorageFileItem( Repository repository, ResourceStoreRequest request, ContentLocator contentLocator )
     {
-        super( repository, request, canRead, canWrite );
+        super( repository, request );
         this.contentLocator = contentLocator;
-    }
-
-    /**
-     * Shortcut method.
-     * 
-     * @param repository
-     * @param path
-     * @param canRead
-     * @param canWrite
-     * @param contentLocator
-     * @deprecated supply resourceStoreRequest always
-     */
-    public DefaultStorageFileItem( Repository repository, String path, boolean canRead, boolean canWrite,
-                                   ContentLocator contentLocator )
-    {
-        this( repository, new ResourceStoreRequest( path, true, false ), canRead, canWrite, contentLocator );
     }
 
     /**
@@ -84,18 +68,10 @@ public class DefaultStorageFileItem
      * @param canWrite the can write
      * @param contentLocator the content locator
      */
-    public DefaultStorageFileItem( RepositoryRouter router, ResourceStoreRequest request, boolean canRead,
-                                   boolean canWrite, ContentLocator contentLocator )
+    public DefaultStorageFileItem( RepositoryRouter router, ResourceStoreRequest request, ContentLocator contentLocator )
     {
-        super( router, request, canRead, canWrite );
+        super( router, request );
         this.contentLocator = contentLocator;
-    }
-
-    @Deprecated
-    public DefaultStorageFileItem( RepositoryRouter router, String path, boolean canRead, boolean canWrite,
-                                   ContentLocator contentLocator )
-    {
-        this( router, new ResourceStoreRequest( path, true, false ), canRead, canWrite, contentLocator );
     }
 
     public long getLength()

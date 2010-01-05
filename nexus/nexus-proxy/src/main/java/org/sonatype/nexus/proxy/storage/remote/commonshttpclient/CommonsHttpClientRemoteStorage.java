@@ -178,7 +178,7 @@ public class CommonsHttpClientRemoteStorage
                 }
 
                 DefaultStorageFileItem httpItem =
-                    new DefaultStorageFileItem( repository, request, true, true, new PreparedContentLocator(
+                    new DefaultStorageFileItem( repository, request, new PreparedContentLocator(
                         new HttpClientInputStream( get, is ), mimeType ) );
 
                 if ( get.getResponseContentLength() != -1 )
@@ -329,7 +329,7 @@ public class CommonsHttpClientRemoteStorage
      * @return the int
      */
     protected int executeMethod( ProxyRepository repository, ResourceStoreRequest request, HttpMethod method,
-        URL remoteUrl )
+                                 URL remoteUrl )
         throws RemoteAccessException, StorageException
     {
         URI methodURI = null;
@@ -474,7 +474,7 @@ public class CommonsHttpClientRemoteStorage
      * @throws StorageException
      */
     protected boolean checkRemoteAvailability( long newerThen, ProxyRepository repository,
-        ResourceStoreRequest request, boolean relaxedCheck )
+                                               ResourceStoreRequest request, boolean relaxedCheck )
         throws RemoteAuthenticationNeededException, RemoteAccessException, StorageException
     {
         URL remoteURL = getAbsoluteUrlFromBase( repository, request );

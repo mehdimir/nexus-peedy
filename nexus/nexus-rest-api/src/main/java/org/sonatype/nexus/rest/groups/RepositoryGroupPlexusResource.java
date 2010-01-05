@@ -186,18 +186,18 @@ public class RepositoryGroupPlexusResource
 
             throw new ResourceException( Status.CLIENT_ERROR_BAD_REQUEST, "Repository Group Cannot be deleted" );
         }
-        catch ( IOException e )
-        {
-            getLogger().warn( "Got IO Exception!", e );
-
-            throw new ResourceException( Status.SERVER_ERROR_INTERNAL );
-        }
         catch ( AccessDeniedException e )
         {
             getLogger().warn( "Not allowed to delete Repository Group '" + getGroupId( request ) + "'", e );
 
             throw new ResourceException( Status.CLIENT_ERROR_BAD_REQUEST, "Not allowed to delete Repository Group '"
                 + getGroupId( request ) + "'" );
+        }
+        catch ( IOException e )
+        {
+            getLogger().warn( "Got IO Exception!", e );
+
+            throw new ResourceException( Status.SERVER_ERROR_INTERNAL );
         }
     }
 

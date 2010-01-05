@@ -18,6 +18,7 @@ import static org.easymock.EasyMock.createMock;
 import org.easymock.EasyMock;
 import org.sonatype.nexus.proxy.AbstractNexusTestEnvironment;
 import org.sonatype.nexus.proxy.ResourceStore;
+import org.sonatype.nexus.proxy.ResourceStoreRequest;
 import org.sonatype.nexus.proxy.repository.Repository;
 import org.sonatype.nexus.proxy.router.RepositoryRouter;
 
@@ -70,6 +71,11 @@ public abstract class AbstractStorageItemTest
     public void testDummy()
     {
         assertEquals( "a", "a" );
+    }
+
+    protected ResourceStoreRequest crsr( String path )
+    {
+        return new ResourceStoreRequest( path );
     }
 
 }

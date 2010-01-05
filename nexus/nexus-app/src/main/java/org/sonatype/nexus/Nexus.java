@@ -82,7 +82,7 @@ public interface Nexus
      * @see #deleteRepository(String, boolean)
      */
     public void deleteRepository( String id )
-        throws NoSuchRepositoryException, IOException, ConfigurationException, AccessDeniedException;
+        throws NoSuchRepositoryException, IOException, ConfigurationException;
 
     /**
      * Delete a repository, can only delete user managed repository unless force == true
@@ -95,7 +95,7 @@ public interface Nexus
      * @throws AccessDeniedException when try to delete a non-user-managed repository and without force enabled
      */
     public void deleteRepository( String id, boolean force )
-        throws NoSuchRepositoryException, IOException, ConfigurationException, AccessDeniedException;
+        throws NoSuchRepositoryException, IOException, ConfigurationException;
 
     // ----------------------------------------------------------------------------
     // Maintenance

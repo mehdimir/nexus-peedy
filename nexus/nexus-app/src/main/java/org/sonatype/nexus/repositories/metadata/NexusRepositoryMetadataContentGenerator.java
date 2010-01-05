@@ -6,8 +6,6 @@ import java.io.InputStream;
 
 import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.util.IOUtil;
-import org.sonatype.nexus.proxy.IllegalOperationException;
-import org.sonatype.nexus.proxy.ItemNotFoundException;
 import org.sonatype.nexus.proxy.StorageException;
 import org.sonatype.nexus.proxy.item.ContentGenerator;
 import org.sonatype.nexus.proxy.item.ContentLocator;
@@ -20,9 +18,7 @@ public class NexusRepositoryMetadataContentGenerator
     implements ContentGenerator
 {
     public ContentLocator generateContent( Repository repository, String path, StorageFileItem item )
-        throws IllegalOperationException,
-            ItemNotFoundException,
-            StorageException
+        throws StorageException
     {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
 

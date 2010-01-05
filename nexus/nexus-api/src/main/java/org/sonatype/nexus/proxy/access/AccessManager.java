@@ -14,6 +14,7 @@
 package org.sonatype.nexus.proxy.access;
 
 import org.sonatype.nexus.proxy.AccessDeniedException;
+import org.sonatype.nexus.proxy.AuthorizationException;
 import org.sonatype.nexus.proxy.ResourceStoreRequest;
 import org.sonatype.nexus.proxy.repository.Repository;
 
@@ -50,5 +51,5 @@ public interface AccessManager
      * @throws AccessDeniedException the access denied exception
      */
     void decide( Repository repository, ResourceStoreRequest request, Action action )
-        throws AccessDeniedException;
+        throws AuthorizationException;
 }

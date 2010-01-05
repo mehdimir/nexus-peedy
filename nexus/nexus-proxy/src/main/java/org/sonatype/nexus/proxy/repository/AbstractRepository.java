@@ -31,6 +31,7 @@ import org.sonatype.nexus.configuration.model.CRepositoryExternalConfigurationHo
 import org.sonatype.nexus.feeds.FeedRecorder;
 import org.sonatype.nexus.mime.MimeUtil;
 import org.sonatype.nexus.proxy.AccessDeniedException;
+import org.sonatype.nexus.proxy.AuthorizationException;
 import org.sonatype.nexus.proxy.IllegalOperationException;
 import org.sonatype.nexus.proxy.IllegalRequestException;
 import org.sonatype.nexus.proxy.ItemNotFoundException;
@@ -600,7 +601,7 @@ public abstract class AbstractRepository
         }
 
         DefaultStorageFileItem fItem =
-            new DefaultStorageFileItem( this, request, true, true, new PreparedContentLocator( is, getMimeUtil()
+            new DefaultStorageFileItem( this, request, new PreparedContentLocator( is, getMimeUtil()
                 .getMimeType( request.getRequestPath() ) ) );
 
         if ( userAttributes != null )
@@ -619,7 +620,7 @@ public abstract class AbstractRepository
             throw new AccessDeniedException( request, "Operation does not fills needed requirements!" );
         }
 
-        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( this, request, true, true );
+        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( this, request );
 
         if ( userAttributes != null )
         {
@@ -828,7 +829,7 @@ public abstract class AbstractRepository
                 try
                 {
                     DefaultStorageFileItem target =
-                        new DefaultStorageFileItem( this, to, true, true, new PreparedContentLocator(
+                        new DefaultStorageFileItem( this, to, new PreparedContentLocator(
                             ( (StorageFileItem) item ).getInputStream(), ( (StorageFileItem) item ).getMimeType() ) );
 
                     target.getItemContext().putAll( item.getItemContext() );
@@ -1061,7 +1062,7 @@ public abstract class AbstractRepository
                                 + " is in NFC and still active, throwing ItemNotFoundException." );
                     }
 
-                    throw new ItemNotFoundException( request );
+                    throw new ItemNotFoundException( request, this );
                 }
             }
         }
@@ -1126,7 +1127,7 @@ public abstract class AbstractRepository
      * @throws AccessDeniedException the access denied exception
      */
     protected boolean checkConditions( ResourceStoreRequest request, Action action )
-        throws IllegalOperationException, AccessDeniedException
+        throws IllegalOperationException, AuthorizationException
     {
         if ( !this.getLocalStatus().shouldServiceRequest() )
         {
@@ -1185,7 +1186,7 @@ public abstract class AbstractRepository
             new ByteArrayContentLocator( bytes, getMimeUtil().getMimeType( request.getRequestPath() ) );
 
         DefaultStorageFileItem result =
-            new DefaultStorageFileItem( this, request, true /* isReadable */, false /* isWritable */, content );
+            new DefaultStorageFileItem( this, request, content );
         result.setLength( bytes.length );
 
         return result;

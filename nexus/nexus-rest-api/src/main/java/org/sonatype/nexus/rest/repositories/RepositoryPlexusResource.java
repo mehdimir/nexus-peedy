@@ -310,18 +310,18 @@ public class RepositoryPlexusResource
 
             throw new ResourceException( Status.CLIENT_ERROR_NOT_FOUND, "Repository Not Found" );
         }
-        catch ( IOException e )
-        {
-            getLogger().warn( "Got IO Exception!", e );
-
-            throw new ResourceException( Status.SERVER_ERROR_INTERNAL );
-        }
         catch ( AccessDeniedException e )
         {
             getLogger().warn( "Not allowed to delete repository '" + repoId + "'", e );
 
             throw new ResourceException( Status.CLIENT_ERROR_BAD_REQUEST, "Not allowed to delete repository '" + repoId
                 + "'" );
+        }
+        catch ( IOException e )
+        {
+            getLogger().warn( "Got IO Exception!", e );
+
+            throw new ResourceException( Status.SERVER_ERROR_INTERNAL );
         }
     }
 

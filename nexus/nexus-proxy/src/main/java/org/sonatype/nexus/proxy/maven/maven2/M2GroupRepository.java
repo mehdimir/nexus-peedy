@@ -299,7 +299,7 @@ public class M2GroupRepository
         ContentLocator contentLocator = new ByteArrayContentLocator( content, mimeType );
 
         DefaultStorageCompositeFileItem result =
-            new DefaultStorageCompositeFileItem( this, request, true, false, contentLocator, sources );
+            new DefaultStorageCompositeFileItem( this, request, contentLocator, sources );
 
         result.setLength( content.length );
 

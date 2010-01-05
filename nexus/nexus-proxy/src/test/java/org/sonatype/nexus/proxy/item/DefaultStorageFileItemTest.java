@@ -38,7 +38,7 @@ public class DefaultStorageFileItemTest
         //
 
         DefaultStorageFileItem file =
-            new DefaultStorageFileItem( repository, "/a.txt", true, true, new StringContentLocator( "/a.txt" ) );
+            new DefaultStorageFileItem( repository, crsr( "/a.txt" ), new StringContentLocator( "/a.txt" ) );
         checkAbstractStorageItem( repository, file, false, "a.txt", "/a.txt", "/" );
 
         // content
@@ -61,7 +61,7 @@ public class DefaultStorageFileItemTest
         //
 
         DefaultStorageFileItem file =
-            new DefaultStorageFileItem( repository, "/a.txt", true, true, new StringContentLocator( "THIS IS CONTENT" ) );
+            new DefaultStorageFileItem( repository, crsr( "/a.txt" ), new StringContentLocator( "THIS IS CONTENT" ) );
         checkAbstractStorageItem( repository, file, false, "a.txt", "/a.txt", "/" );
 
         // content
@@ -83,7 +83,7 @@ public class DefaultStorageFileItemTest
         //
 
         DefaultStorageFileItem file =
-            new DefaultStorageFileItem( repository, "/some/dir/hierarchy/a.txt", true, true, new StringContentLocator(
+            new DefaultStorageFileItem( repository, crsr( "/some/dir/hierarchy/a.txt" ), new StringContentLocator(
                 "/some/dir/hierarchy/a.txt" ) );
         checkAbstractStorageItem( repository, file, false, "a.txt", "/some/dir/hierarchy/a.txt", "/some/dir/hierarchy" );
 
@@ -107,7 +107,7 @@ public class DefaultStorageFileItemTest
         //
 
         DefaultStorageFileItem file =
-            new DefaultStorageFileItem( repository, "/some/dir/hierarchy/a.txt", true, true, new StringContentLocator(
+            new DefaultStorageFileItem( repository, crsr( "/some/dir/hierarchy/a.txt" ), new StringContentLocator(
                 "THIS IS CONTENT" ) );
         checkAbstractStorageItem( repository, file, false, "a.txt", "/some/dir/hierarchy/a.txt", "/some/dir/hierarchy" );
 

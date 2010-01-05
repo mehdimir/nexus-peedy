@@ -474,7 +474,7 @@ public class DefaultRepositoryRouter
             if ( kind == null )
             {
                 // unknown explodedPath[0]
-                throw new ItemNotFoundException( request );
+                throw new ItemNotFoundException( request, null );
             }
 
             result.setStrippedPrefix( ItemPathUtils.concatPaths( explodedPath[0] ) );
@@ -494,13 +494,13 @@ public class DefaultRepositoryRouter
                 if ( !repository.isExposed() )
                 {
                     // this is not the main facet or the repo is not exposed
-                    throw new ItemNotFoundException( request );
+                    throw new ItemNotFoundException( request, null );
                 }
             }
             catch ( NoSuchRepositoryException e )
             {
                 // obviously, the repoId (explodedPath[1]) points to some nonexistent repoID
-                throw new ItemNotFoundException( request );
+                throw new ItemNotFoundException( request, null );
             }
 
             result.setStrippedPrefix( ItemPathUtils.concatPaths( explodedPath[0], explodedPath[1] ) );
@@ -568,7 +568,7 @@ public class DefaultRepositoryRouter
     {
         ResourceStoreRequest req = new ResourceStoreRequest( route.getOriginalRequestPath() );
 
-        DefaultStorageCollectionItem result = new DefaultStorageCollectionItem( this, req, true, false );
+        DefaultStorageCollectionItem result = new DefaultStorageCollectionItem( this, req );
 
         result.getItemContext().putAll( request.getRequestContext() );
 
@@ -595,7 +595,7 @@ public class DefaultRepositoryRouter
                                 .getPrefix() ) );
 
                         DefaultStorageCollectionItem repositories =
-                            new DefaultStorageCollectionItem( this, req, true, false );
+                            new DefaultStorageCollectionItem( this, req );
 
                         repositories.getItemContext().putAll( request.getRequestContext() );
 
@@ -645,7 +645,7 @@ public class DefaultRepositoryRouter
             // if no prefix matched, Item not found
             if ( repositories == null || repositories.isEmpty() )
             {
-                throw new ItemNotFoundException( request );
+                throw new ItemNotFoundException( request, null );
             }
 
             // filter access to the repositories
@@ -675,7 +675,7 @@ public class DefaultRepositoryRouter
                                 .getPathPrefix() ) );
                     }
 
-                    repoItem = new DefaultStorageCollectionItem( this, req, true, false );
+                    repoItem = new DefaultStorageCollectionItem( this, req );
 
                     repoItem.getItemContext().putAll( request.getRequestContext() );
 
@@ -687,7 +687,7 @@ public class DefaultRepositoryRouter
         }
         else
         {
-            throw new ItemNotFoundException( request );
+            throw new ItemNotFoundException( request, null );
         }
     }
 

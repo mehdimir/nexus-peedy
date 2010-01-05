@@ -40,10 +40,9 @@ public class DefaultStorageLinkItem
      * @param canWrite the can write
      * @param targetUid the target uid
      */
-    public DefaultStorageLinkItem( Repository repository, ResourceStoreRequest request, boolean canRead,
-        boolean canWrite, RepositoryItemUid targetUid )
+    public DefaultStorageLinkItem( Repository repository, ResourceStoreRequest request, RepositoryItemUid targetUid )
     {
-        super( repository, request, canRead, canWrite );
+        super( repository, request );
 
         setTarget( targetUid );
     }
@@ -58,10 +57,9 @@ public class DefaultStorageLinkItem
      * @param targetUid
      * @deprecated supply resourceStoreRequest always
      */
-    public DefaultStorageLinkItem( Repository repository, String path, boolean canRead, boolean canWrite,
-        RepositoryItemUid targetUid )
+    public DefaultStorageLinkItem( Repository repository, String path, RepositoryItemUid targetUid )
     {
-        this( repository, new ResourceStoreRequest( path, true, false ), canRead, canWrite, targetUid );
+        this( repository, new ResourceStoreRequest( path, true, false ), targetUid );
     }
 
     /**
@@ -73,10 +71,9 @@ public class DefaultStorageLinkItem
      * @param canWrite the can write
      * @param targetUid the target uid
      */
-    public DefaultStorageLinkItem( RepositoryRouter router, ResourceStoreRequest request, boolean canRead,
-        boolean canWrite, RepositoryItemUid targetUid )
+    public DefaultStorageLinkItem( RepositoryRouter router, ResourceStoreRequest request, RepositoryItemUid targetUid )
     {
-        super( router, request, canRead, canWrite );
+        super( router, request );
 
         setTarget( targetUid );
     }

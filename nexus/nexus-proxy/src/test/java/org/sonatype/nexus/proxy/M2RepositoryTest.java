@@ -122,15 +122,16 @@ public class M2RepositoryTest
         repository.getCurrentCoreConfiguration().commitChanges();
 
         DefaultStorageFileItem item =
-            new DefaultStorageFileItem( repository, SPOOF_RELEASE, true, true, new StringContentLocator( SPOOF_RELEASE ) );
+            new DefaultStorageFileItem( repository, new ResourceStoreRequest( SPOOF_RELEASE ),
+                new StringContentLocator( SPOOF_RELEASE ) );
 
         repository.storeItem( false, item );
 
         try
         {
             item =
-                new DefaultStorageFileItem( repository, SPOOF_SNAPSHOT, true, true, new StringContentLocator(
-                    SPOOF_SNAPSHOT ) );
+                new DefaultStorageFileItem( repository, new ResourceStoreRequest( SPOOF_SNAPSHOT ),
+                    new StringContentLocator( SPOOF_SNAPSHOT ) );
 
             repository.storeItem( false, item );
 
@@ -149,16 +150,16 @@ public class M2RepositoryTest
         repository.getCurrentCoreConfiguration().commitChanges();
 
         item =
-            new DefaultStorageFileItem( repository, SPOOF_SNAPSHOT, true, true, new StringContentLocator(
-                SPOOF_SNAPSHOT ) );
+            new DefaultStorageFileItem( repository, new ResourceStoreRequest( SPOOF_SNAPSHOT ),
+                new StringContentLocator( SPOOF_SNAPSHOT ) );
 
         repository.storeItem( false, item );
 
         try
         {
             item =
-                new DefaultStorageFileItem( repository, SPOOF_RELEASE, true, true, new StringContentLocator(
-                    SPOOF_RELEASE ) );
+                new DefaultStorageFileItem( repository, new ResourceStoreRequest( SPOOF_RELEASE ),
+                    new StringContentLocator( SPOOF_RELEASE ) );
 
             repository.storeItem( false, item );
 

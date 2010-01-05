@@ -26,7 +26,6 @@ import org.sonatype.nexus.artifact.IllegalArtifactCoordinateException;
 import org.sonatype.nexus.proxy.AccessDeniedException;
 import org.sonatype.nexus.proxy.IllegalOperationException;
 import org.sonatype.nexus.proxy.ItemNotFoundException;
-import org.sonatype.nexus.proxy.NoSuchResourceStoreException;
 import org.sonatype.nexus.proxy.ResourceStoreRequest;
 import org.sonatype.nexus.proxy.StorageException;
 import org.sonatype.nexus.proxy.attributes.inspectors.DigestCalculatingInspector;
@@ -183,7 +182,7 @@ public abstract class LayoutConverterShadowRepository
             {
                 request.setRequestPath( storedFile.getPath() + ".sha1" );
 
-                storeItem( false, new DefaultStorageFileItem( this, request, true, true, new StringContentLocator(
+                storeItem( false, new DefaultStorageFileItem( this, request, new StringContentLocator(
                     sha1Hash ) ) );
             }
 
@@ -191,7 +190,7 @@ public abstract class LayoutConverterShadowRepository
             {
                 request.setRequestPath( storedFile.getPath() + ".md5" );
 
-                storeItem( false, new DefaultStorageFileItem( this, request, true, true, new StringContentLocator(
+                storeItem( false, new DefaultStorageFileItem( this, request, new StringContentLocator(
                     md5Hash ) ) );
             }
         }
@@ -295,7 +294,7 @@ public abstract class LayoutConverterShadowRepository
             {
                 req.setRequestPath( item.getPath() + ".sha1" );
 
-                storeItem( fromTask, new DefaultStorageFileItem( this, req, true, true, new StringContentLocator(
+                storeItem( fromTask, new DefaultStorageFileItem( this, req, new StringContentLocator(
                     sha1Hash ) ) );
             }
 
@@ -303,7 +302,7 @@ public abstract class LayoutConverterShadowRepository
             {
                 req.setRequestPath( item.getPath() + ".md5" );
 
-                storeItem( fromTask, new DefaultStorageFileItem( this, req, true, true, new StringContentLocator(
+                storeItem( fromTask, new DefaultStorageFileItem( this, req, new StringContentLocator(
                     md5Hash ) ) );
             }
         }
@@ -487,15 +486,6 @@ public abstract class LayoutConverterShadowRepository
                         // exit loop
                         parentRequest = null;
                     }
-                    catch ( NoSuchResourceStoreException e )
-                    {
-                        this.getLogger().debug(
-                            "Failed to delete shadow parent: " + this.getId() + ":" + parentItem.getPath()
-                                + " does not exist",
-                            e );
-                        // exit loop
-                        parentRequest = null;
-                    }
                 }
                 else
                 {
@@ -527,7 +517,7 @@ public abstract class LayoutConverterShadowRepository
             req.getRequestContext().putAll( item.getItemContext() );
 
             DefaultStorageLinkItem link =
-                new DefaultStorageLinkItem( this, req, true, true, item.getRepositoryItemUid() );
+                new DefaultStorageLinkItem( this, req, item.getRepositoryItemUid() );
 
             storeItem( false, link );
 

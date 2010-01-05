@@ -13,6 +13,7 @@
  */
 package org.sonatype.nexus.proxy;
 
+import org.sonatype.nexus.proxy.item.StorageNotFoundItem;
 import org.sonatype.nexus.proxy.repository.Repository;
 
 /**
@@ -25,75 +26,77 @@ public class ItemNotFoundException
 {
     private static final long serialVersionUID = -4964273361722823796L;
 
+    private final StorageNotFoundItem notFoundItem;
+
     private final ResourceStoreRequest request;
 
     private final Repository repository;
 
-    /**
-     * Do not use this constructor!
-     * 
-     * @param path
-     * @deprecated use a constructor that accepts a request!
-     */
-    public ItemNotFoundException( String path )
+    @Deprecated
+    public ItemNotFoundException( String message, ResourceStoreRequest request, Repository repository )
     {
-        this( path, null );
+        super( message );
+
+        this.notFoundItem = null;
+
+        this.repository = repository;
+
+        this.request = request;
     }
 
-    /**
-     * Do not use this constructor!
-     * 
-     * @param path
-     * @param cause
-     * @deprecated use a constructor that accepts a request!
-     */
-    public ItemNotFoundException( String path, Throwable cause )
-    {
-        super( "Item not found on path " + path, cause );
-
-        this.repository = null;
-
-        this.request = null;
-    }
-
-    public ItemNotFoundException( ResourceStoreRequest request )
-    {
-        this( request, null, null );
-    }
-
+    @Deprecated
     public ItemNotFoundException( ResourceStoreRequest request, Repository repository )
-    {
-        this( request, repository, null );
-    }
-
-    public ItemNotFoundException( ResourceStoreRequest request, Repository repository, Throwable cause )
     {
         this( repository != null ? "Item not found on path \"" + request.toString() + "\" in repository \""
             + repository.getId() + "\"!" : "Item not found on path \"" + request.toString() + "\"!", request,
-            repository, cause );
+            repository );
     }
 
-    public ItemNotFoundException( String message, ResourceStoreRequest request, Repository repository )
+    public ItemNotFoundException( StorageNotFoundItem notFoundItem )
     {
-        this( message, request, repository, null );
+        this( notFoundItem.getRepository() != null ? "Item not found on path \""
+            + notFoundItem.getResourceStoreRequest().toString() + "\" in repository \""
+            + notFoundItem.getRepository().getId() + "\"!" : "Item not found on path \""
+            + notFoundItem.getResourceStoreRequest() + "\"!", notFoundItem );
     }
 
-    public ItemNotFoundException( String message, ResourceStoreRequest request, Repository repository, Throwable cause )
+    public ItemNotFoundException( String message, StorageNotFoundItem notFoundItem )
     {
-        super( message, cause );
+        super( message );
 
-        this.request = request;
+        this.notFoundItem = notFoundItem;
 
-        this.repository = repository;
+        this.request = null;
+
+        this.repository = null;
+    }
+
+    public StorageNotFoundItem getStorageNotFoundItem()
+    {
+        return notFoundItem;
     }
 
     public Repository getRepository()
     {
-        return repository;
+        if ( getStorageNotFoundItem() != null )
+        {
+            return getStorageNotFoundItem().getRepository();
+        }
+        else
+        {
+            return repository;
+        }
     }
 
     public ResourceStoreRequest getRequest()
     {
-        return request;
+        if ( getStorageNotFoundItem() != null )
+        {
+            return getStorageNotFoundItem().getResourceStoreRequest();
+        }
+        else
+        {
+            return request;
+        }
     }
 }

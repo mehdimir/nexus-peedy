@@ -30,11 +30,11 @@ public class DefaultStorageCollectionItemTest
     public void testNonVirtualCollectionSimple()
     {
         expect( repository.getId() ).andReturn( "dummy" ).anyTimes();
-        expect( repository.createUid( "/" ) ).andReturn( new DefaultRepositoryItemUid( null,  repository, "/" ) );
+        expect( repository.createUid( "/" ) ).andReturn( new DefaultRepositoryItemUid( null, repository, "/" ) );
 
         replay( repository );
 
-        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( repository, "/", true, true );
+        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( repository, crsr( "/" ) );
         checkAbstractStorageItem( repository, coll, false, "", "/", "/" );
     }
 
@@ -57,15 +57,14 @@ public class DefaultStorageCollectionItemTest
         replay( repository );
 
         // and now fill in result, since repo is active
-        result.add( new DefaultStorageFileItem( repository, "/a/some/dir/coll/A", true, true, new StringContentLocator(
-            "A" ) ) );
-        result.add( new DefaultStorageFileItem( repository, "/a/some/dir/coll/B", true, true, new StringContentLocator(
-            "B" ) ) );
-        result.add( new DefaultStorageFileItem( repository, "/a/some/dir/coll/C", true, true, new StringContentLocator(
-            "C" ) ) );
+        result.add( new DefaultStorageFileItem( repository, crsr( "/a/some/dir/coll/A" ),
+            new StringContentLocator( "A" ) ) );
+        result.add( new DefaultStorageFileItem( repository, crsr( "/a/some/dir/coll/B" ),
+            new StringContentLocator( "B" ) ) );
+        result.add( new DefaultStorageFileItem( repository, crsr( "/a/some/dir/coll/C" ),
+            new StringContentLocator( "C" ) ) );
 
-        DefaultStorageCollectionItem coll =
-            new DefaultStorageCollectionItem( repository, "/a/some/dir/coll", true, true );
+        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( repository, crsr( "/a/some/dir/coll" ) );
         checkAbstractStorageItem( repository, coll, false, "coll", "/a/some/dir/coll", "/a/some/dir" );
 
         Collection<StorageItem> items = coll.list();
@@ -76,7 +75,7 @@ public class DefaultStorageCollectionItemTest
     {
         replay( router );
 
-        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( router, "/", true, true );
+        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( router, crsr( "/" ) );
         checkAbstractStorageItem( router, coll, true, "", "/", "/" );
     }
 
@@ -90,12 +89,12 @@ public class DefaultStorageCollectionItemTest
         replay( router );
 
         // and now fill in result, since repo is active
-        result.add( new DefaultStorageFileItem( router, "/a/some/dir/coll/A", true, true,
-            new StringContentLocator( "A" ) ) );
-        result.add( new DefaultStorageFileItem( router, "/a/some/dir/coll/B", true, true,
-            new StringContentLocator( "B" ) ) );
+        result
+            .add( new DefaultStorageFileItem( router, crsr( "/a/some/dir/coll/A" ), new StringContentLocator( "A" ) ) );
+        result
+            .add( new DefaultStorageFileItem( router, crsr( "/a/some/dir/coll/B" ), new StringContentLocator( "B" ) ) );
 
-        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( router, "/and/another/coll", true, true );
+        DefaultStorageCollectionItem coll = new DefaultStorageCollectionItem( router, crsr( "/and/another/coll" ) );
         checkAbstractStorageItem( router, coll, true, "coll", "/and/another/coll", "/and/another" );
 
         Collection<StorageItem> items = coll.list();

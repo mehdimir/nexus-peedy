@@ -1140,7 +1140,7 @@ public abstract class AbstractProxyRepository
                     }
                     else
                     {
-                        setRemoteStatus( RemoteStatus.UNAVAILABLE, new ItemNotFoundException( request ) );
+                        setRemoteStatus( RemoteStatus.UNAVAILABLE, new ItemNotFoundException( request, AbstractProxyRepository.this ) );
                     }
                 }
                 catch ( StorageException e )

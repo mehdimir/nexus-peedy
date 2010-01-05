@@ -15,7 +15,6 @@ package org.sonatype.nexus.proxy.item;
 
 import org.sonatype.nexus.proxy.ResourceStoreRequest;
 import org.sonatype.nexus.proxy.repository.Repository;
-import org.sonatype.nexus.proxy.router.RepositoryRouter;
 
 /**
  * The Class DefaultStorageFileTemplateItem. This is a specialization of file item: it's "body" serves as Template, and
@@ -33,28 +32,11 @@ public class DefaultStorageFileTemplateItem
      * @param canWrite the can write
      * @param contentLocator the content locator
      */
-    public DefaultStorageFileTemplateItem( Repository repository, ResourceStoreRequest request, boolean canRead,
-        boolean canWrite, ContentLocator contentLocator )
+    public DefaultStorageFileTemplateItem( Repository repository, ResourceStoreRequest request,
+                                           ContentLocator contentLocator )
     {
-        super( repository, request, canRead, canWrite, contentLocator );
+        super( repository, request, contentLocator );
 
-        getItemContext().put( ContentGenerator.CONTENT_GENERATOR_ID, "velocity" );
-    }
-
-    /**
-     * Instantiates a new default storage file item.
-     * 
-     * @param RepositoryRouter router
-     * @param path the path
-     * @param canRead the can read
-     * @param canWrite the can write
-     * @param contentLocator the content locator
-     */
-    public DefaultStorageFileTemplateItem( RepositoryRouter router, ResourceStoreRequest request, boolean canRead,
-        boolean canWrite, ContentLocator contentLocator )
-    {
-        super( router, request, canRead, canWrite, contentLocator );
-
-        getItemContext().put( ContentGenerator.CONTENT_GENERATOR_ID, VelocityContentGenerator.class.getSimpleName() );
+        getItemContext().put( ContentGenerator.CONTENT_GENERATOR_ID, VelocityContentGenerator.ID );
     }
 }

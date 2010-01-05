@@ -1,5 +1,6 @@
 package org.sonatype.nexus.proxy.item;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 
@@ -8,22 +9,20 @@ import org.codehaus.plexus.component.annotations.Component;
 import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.velocity.VelocityComponent;
-import org.sonatype.nexus.proxy.IllegalOperationException;
-import org.sonatype.nexus.proxy.ItemNotFoundException;
 import org.sonatype.nexus.proxy.StorageException;
 import org.sonatype.nexus.proxy.repository.Repository;
 
-@Component( role = ContentGenerator.class, hint = "VelocityContentGenerator" )
+@Component( role = ContentGenerator.class, hint = VelocityContentGenerator.ID )
 public class VelocityContentGenerator
     implements ContentGenerator
 {
+    public static final String ID = "velocity";
+
     @Requirement
     private VelocityComponent velocityComponent;
 
     public ContentLocator generateContent( Repository repository, String path, StorageFileItem item )
-        throws IllegalOperationException,
-            ItemNotFoundException,
-            StorageException
+        throws StorageException
     {
         InputStreamReader isr = null;
 
@@ -39,9 +38,10 @@ public class VelocityContentGenerator
 
             return new StringContentLocator( sw.toString() );
         }
-        catch ( Exception e )
+        catch ( IOException e )
         {
-            throw new StorageException( "Could not expand the template: " + item.getRepositoryItemUid().toString(), e );
+             // XXX: nonsense!
+            throw new StorageException( "Unable to generate content!", e );
         }
         finally
         {

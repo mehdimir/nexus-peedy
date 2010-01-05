@@ -214,7 +214,7 @@ public abstract class AbstractGroupRepository
 
                         if ( item instanceof StorageCollectionItem )
                         {
-                            item = new DefaultStorageCollectionItem( this, request, true, false );
+                            item = new DefaultStorageCollectionItem( this, request );
                         }
 
                         return item;
@@ -348,10 +348,6 @@ public abstract class AbstractGroupRepository
                 catch ( StorageException e )
                 {
                     throw e;
-                }
-                catch ( IllegalOperationException e )
-                {
-                    getLogger().warn( "Member repository request failed", e );
                 }
                 catch ( ItemNotFoundException e )
                 {

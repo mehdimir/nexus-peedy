@@ -14,7 +14,8 @@
 package org.sonatype.nexus.proxy;
 
 /**
- * IllegalRequestException is thrown when an illegal request is tried against a ResourceStore.
+ * IllegalRequestException is thrown when an illegal request is tried against a ResourceStore, like ovewrite to a
+ * read-once repository.
  * 
  * @author cstamas
  */

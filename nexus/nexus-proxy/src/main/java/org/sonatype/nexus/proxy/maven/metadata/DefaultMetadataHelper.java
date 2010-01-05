@@ -143,7 +143,7 @@ public class DefaultMetadataHelper
     {
         ResourceStoreRequest req = new ResourceStoreRequest( path );
 
-        DefaultStorageFileItem mdFile = new DefaultStorageFileItem( repository, req, true, true, contentLocator );
+        DefaultStorageFileItem mdFile = new DefaultStorageFileItem( repository, req, contentLocator );
 
         repository.storeItem( false, mdFile );
 

@@ -80,7 +80,7 @@ public class DefaultAttributeStorageTest
         throws Exception
     {
         DefaultStorageFileItem file =
-            new DefaultStorageFileItem( repository, new ResourceStoreRequest( "/a.txt" ), true, true,
+            new DefaultStorageFileItem( repository, new ResourceStoreRequest( "/a.txt" ), 
                 new StringContentLocator( "CONTENT" ) );
 
         file.getAttributes().put( "kuku", "kuku" );
@@ -98,7 +98,7 @@ public class DefaultAttributeStorageTest
         throws Exception
     {
         DefaultStorageFileItem file =
-            new DefaultStorageFileItem( repository, new ResourceStoreRequest( "/b.txt" ), true, true,
+            new DefaultStorageFileItem( repository, new ResourceStoreRequest( "/b.txt" ), 
                 new StringContentLocator( "CONTENT" ) );
 
         file.getAttributes().put( "kuku", "kuku" );

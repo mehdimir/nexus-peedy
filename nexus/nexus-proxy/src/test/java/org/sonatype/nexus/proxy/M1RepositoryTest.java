@@ -30,7 +30,6 @@ import org.sonatype.nexus.proxy.item.StorageItem;
 import org.sonatype.nexus.proxy.item.StringContentLocator;
 import org.sonatype.nexus.proxy.maven.RepositoryPolicy;
 import org.sonatype.nexus.proxy.maven.maven1.M1Repository;
-import org.sonatype.nexus.proxy.maven.maven2.M2Repository;
 import org.sonatype.nexus.proxy.repository.Repository;
 import org.sonatype.nexus.proxy.repository.RepositoryWritePolicy;
 import org.sonatype.nexus.proxy.storage.UnsupportedStorageOperationException;
@@ -39,7 +38,7 @@ public class M1RepositoryTest
     extends M1ResourceStoreTest
 {
     private static final long A_DAY = 24L * 60L * 60L * 1000L;
-    
+
     protected static final String SPOOF_RELEASE = "/spoof/poms/spoof-1.0.pom";
 
     protected static final String SPOOF_SNAPSHOT = "/spoof/poms/spoof-1.0-SNAPSHOT.pom";
@@ -66,7 +65,7 @@ public class M1RepositoryTest
         Repository repo1 = getRepositoryRegistry().getRepository( "repo1-m1" );
 
         repo1.setWritePolicy( RepositoryWritePolicy.ALLOW_WRITE );
-        
+
         getApplicationConfiguration().saveConfiguration();
 
         return repo1;
@@ -126,19 +125,17 @@ public class M1RepositoryTest
         repository.setRepositoryPolicy( RepositoryPolicy.RELEASE );
         repository.getCurrentCoreConfiguration().commitChanges();
 
-        DefaultStorageFileItem item = new DefaultStorageFileItem(
-            repository,
-            SPOOF_RELEASE,
-            true,
-            true,
-            new StringContentLocator( SPOOF_RELEASE ) );
+        DefaultStorageFileItem item =
+            new DefaultStorageFileItem( repository, new ResourceStoreRequest( SPOOF_RELEASE ),
+                new StringContentLocator( SPOOF_RELEASE ) );
 
         repository.storeItem( false, item );
 
         try
         {
-            item = new DefaultStorageFileItem( repository, SPOOF_SNAPSHOT, true, true, new StringContentLocator(
-                SPOOF_SNAPSHOT ) );
+            item =
+                new DefaultStorageFileItem( repository, new ResourceStoreRequest( SPOOF_SNAPSHOT ),
+                    new StringContentLocator( SPOOF_SNAPSHOT ) );
 
             repository.storeItem( false, item );
 
@@ -156,15 +153,17 @@ public class M1RepositoryTest
         repository.setRepositoryPolicy( RepositoryPolicy.SNAPSHOT );
         repository.getCurrentCoreConfiguration().commitChanges();
 
-        item = new DefaultStorageFileItem( repository, SPOOF_SNAPSHOT, true, true, new StringContentLocator(
-            SPOOF_SNAPSHOT ) );
+        item =
+            new DefaultStorageFileItem( repository, new ResourceStoreRequest( SPOOF_SNAPSHOT ),
+                new StringContentLocator( SPOOF_SNAPSHOT ) );
 
         repository.storeItem( false, item );
 
         try
         {
-            item = new DefaultStorageFileItem( repository, SPOOF_RELEASE, true, true, new StringContentLocator(
-                SPOOF_RELEASE ) );
+            item =
+                new DefaultStorageFileItem( repository, new ResourceStoreRequest( SPOOF_RELEASE ),
+                    new StringContentLocator( SPOOF_RELEASE ) );
 
             repository.storeItem( false, item );
 
@@ -176,53 +175,62 @@ public class M1RepositoryTest
         }
     }
 
-    public void testProxyLastRequestedAttribute() throws Exception
+    public void testProxyLastRequestedAttribute()
+        throws Exception
     {
         M1Repository repository = (M1Repository) this.getRepositoryRegistry().getRepository( "repo1-m1" );
-        
+
         String item = "/spoof/poms/spoof-1.0.pom";
         ResourceStoreRequest request = new ResourceStoreRequest( item );
         request.getRequestContext().put( AccessManager.REQUEST_REMOTE_ADDRESS, "127.0.0.1" );
         StorageItem storageItem = repository.retrieveItem( request );
-        long lastRequest =  System.currentTimeMillis() - 10 * A_DAY;
+        long lastRequest = System.currentTimeMillis() - 10 * A_DAY;
         storageItem.setLastRequested( lastRequest );
         repository.storeItem( false, storageItem );
-        
+
         // now request the object, the lastRequested timestamp should be updated
         StorageItem resultItem = repository.retrieveItem( request );
-        Assert.assertTrue( resultItem.getLastRequested() + " > " + lastRequest, resultItem.getLastRequested() > lastRequest );
-        
+        Assert.assertTrue( resultItem.getLastRequested() + " > " + lastRequest,
+            resultItem.getLastRequested() > lastRequest );
+
         // check the shadow attributes
-        AbstractStorageItem shadowStorageItem = repository.getLocalStorage().getAttributesHandler().getAttributeStorage().getAttributes( repository.createUid( request.getRequestPath() ) );
+        AbstractStorageItem shadowStorageItem =
+            repository.getLocalStorage().getAttributesHandler().getAttributeStorage().getAttributes(
+                repository.createUid( request.getRequestPath() ) );
         Assert.assertEquals( resultItem.getLastRequested(), shadowStorageItem.getLastRequested() );
     }
-    
-    public void testHostedLastRequestedAttribute() throws Exception
+
+    public void testHostedLastRequestedAttribute()
+        throws Exception
     {
         String itemPath = "/spoof/poms/spoof-1.0.pom";
-        
+
         M1Repository repository = (M1Repository) this.getRepositoryRegistry().getRepository( "inhouse" );
-        File inhouseLocalStorageDir = new File( new URL(((CRepositoryCoreConfiguration) repository.getCurrentCoreConfiguration()).getConfiguration( false).getLocalStorage().getUrl() ).getFile());
-        
+        File inhouseLocalStorageDir =
+            new File( new URL( ( (CRepositoryCoreConfiguration) repository.getCurrentCoreConfiguration() )
+                .getConfiguration( false ).getLocalStorage().getUrl() ).getFile() );
+
         File artifactFile = new File( inhouseLocalStorageDir, itemPath );
         artifactFile.getParentFile().mkdirs();
-        
+
         FileUtils.fileWrite( artifactFile.getAbsolutePath(), "Some Text so the file is not empty" );
-        
+
         ResourceStoreRequest request = new ResourceStoreRequest( itemPath );
         request.getRequestContext().put( AccessManager.REQUEST_REMOTE_ADDRESS, "127.0.0.1" );
         StorageItem storageItem = repository.retrieveItem( request );
-        long lastRequest =  System.currentTimeMillis() - 10 * A_DAY;
+        long lastRequest = System.currentTimeMillis() - 10 * A_DAY;
         storageItem.setLastRequested( lastRequest );
         repository.storeItem( false, storageItem );
-        
+
         // now request the object, the lastRequested timestamp should be updated
         StorageItem resultItem = repository.retrieveItem( request );
         Assert.assertTrue( resultItem.getLastRequested() > lastRequest );
-        
+
         // check the shadow attributes
-        AbstractStorageItem shadowStorageItem = repository.getLocalStorage().getAttributesHandler().getAttributeStorage().getAttributes( repository.createUid( request.getRequestPath() ) );
+        AbstractStorageItem shadowStorageItem =
+            repository.getLocalStorage().getAttributesHandler().getAttributeStorage().getAttributes(
+                repository.createUid( request.getRequestPath() ) );
         Assert.assertEquals( resultItem.getLastRequested(), shadowStorageItem.getLastRequested() );
     }
-    
+
 }

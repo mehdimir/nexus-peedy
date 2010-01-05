@@ -242,19 +242,19 @@ public class DefaultNexus
     // ----------------------------------------------------------------------------
 
     public void deleteRepository( String id )
-        throws NoSuchRepositoryException, IOException, ConfigurationException, AccessDeniedException
+        throws NoSuchRepositoryException, IOException, ConfigurationException
     {
         deleteRepository( id, false );
     }
 
     public void deleteRepository( String id, boolean force )
-        throws NoSuchRepositoryException, IOException, ConfigurationException, AccessDeniedException
+        throws NoSuchRepositoryException, IOException, ConfigurationException
     {
         Repository repository = repositoryRegistry.getRepository( id );
 
         if ( !force && !repository.isUserManaged() )
         {
-            throw new AccessDeniedException( "Not allowed to delete non-user-managed repository '" + id + "'." );
+            throw new ConfigurationException( "Not allowed to delete non-user-managed repository '" + id + "'." );
         }
 
         // delete the configuration

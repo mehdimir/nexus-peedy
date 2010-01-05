@@ -15,10 +15,7 @@ package org.sonatype.nexus.proxy.item;
 
 import java.util.Collection;
 
-import org.sonatype.nexus.proxy.AccessDeniedException;
-import org.sonatype.nexus.proxy.IllegalOperationException;
 import org.sonatype.nexus.proxy.ItemNotFoundException;
-import org.sonatype.nexus.proxy.NoSuchResourceStoreException;
 import org.sonatype.nexus.proxy.ResourceStoreRequest;
 import org.sonatype.nexus.proxy.StorageException;
 import org.sonatype.nexus.proxy.repository.Repository;
@@ -43,24 +40,9 @@ public class DefaultStorageCollectionItem
      * @param canRead the can read
      * @param canWrite the can write
      */
-    public DefaultStorageCollectionItem( Repository repository, ResourceStoreRequest request, boolean canRead,
-        boolean canWrite )
+    public DefaultStorageCollectionItem( Repository repository, ResourceStoreRequest request )
     {
-        super( repository, request, canRead, canWrite );
-    }
-
-    /**
-     * Shotuct method.
-     * 
-     * @param repository
-     * @param path
-     * @param canRead
-     * @param canWrite
-     * @deprecated supply resourceStoreRequest always
-     */
-    public DefaultStorageCollectionItem( Repository repository, String path, boolean canRead, boolean canWrite )
-    {
-        this( repository, new ResourceStoreRequest( path, true, false ), canRead, canWrite );
+        super( repository, request );
     }
 
     /**
@@ -72,36 +54,13 @@ public class DefaultStorageCollectionItem
      * @param canRead the can read
      * @param canWrite the can write
      */
-    public DefaultStorageCollectionItem( RepositoryRouter router, ResourceStoreRequest request, boolean canRead,
-        boolean canWrite )
+    public DefaultStorageCollectionItem( RepositoryRouter router, ResourceStoreRequest request )
     {
-        super( router, request, canRead, canWrite );
+        super( router, request );
     }
 
-    /**
-     * Shortcut method.
-     * 
-     * @param router
-     * @param path
-     * @param canRead
-     * @param canWrite
-     * @deprecated supply resourceStoreRequest always
-     */
-    public DefaultStorageCollectionItem( RepositoryRouter router, String path, boolean canRead, boolean canWrite )
-    {
-        this( router, new ResourceStoreRequest( path, true, false ), canRead, canWrite );
-    }
-
-    /*
-     * (non-Javadoc)
-     * @see org.sonatype.nexus.item.StorageCollectionItem#list()
-     */
     public Collection<StorageItem> list()
-        throws AccessDeniedException,
-            NoSuchResourceStoreException,
-            IllegalOperationException,
-            ItemNotFoundException,
-            StorageException
+        throws ItemNotFoundException, StorageException
     {
         if ( isVirtual() )
         {

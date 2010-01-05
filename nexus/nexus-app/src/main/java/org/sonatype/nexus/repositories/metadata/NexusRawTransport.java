@@ -87,8 +87,6 @@ public class NexusRawTransport
         DefaultStorageFileItem file = new DefaultStorageFileItem(
             repository,
             new ResourceStoreRequest( path ),
-            true,
-            true,
             new ByteArrayContentLocator( data, "text/xml" ) );
 
         repository.storeItem( false, file );

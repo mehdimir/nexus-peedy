@@ -21,7 +21,7 @@ package org.sonatype.nexus.proxy;
  * @author cstamas
  */
 public abstract class IllegalOperationException
-    extends Exception
+    extends StorageException
 {
     private static final long serialVersionUID = -1075426559861827023L;
 
@@ -33,10 +33,5 @@ public abstract class IllegalOperationException
     public IllegalOperationException( String message, Throwable cause )
     {
         super( message, cause );
-    }
-
-    public IllegalOperationException( Throwable cause )
-    {
-        super( cause );
     }
 }

@@ -20,14 +20,32 @@ public class InvalidItemContentException
 {
     private static final long serialVersionUID = -1749678254941504279L;
 
-    public InvalidItemContentException( String msg, Throwable cause )
-    {
-        super( msg, cause );
-    }
+    private final ResourceStoreRequest request;
+
+    private final Mirror mirror;
 
     public InvalidItemContentException( ResourceStoreRequest req, Mirror mirror )
     {
-        super( "Item content is invalid on path '" + req.toString() + "' on mirror '" + mirror.getUrl() + "'" );
+        this( "Item content is invalid on path '" + req.toString() + "' on mirror '" + mirror.getUrl() + "'", req,
+            mirror );
     }
 
+    public InvalidItemContentException( String message, ResourceStoreRequest req, Mirror mirror )
+    {
+        super( message );
+
+        this.request = req;
+
+        this.mirror = mirror;
+    }
+
+    public ResourceStoreRequest getRequest()
+    {
+        return request;
+    }
+
+    public Mirror getMirror()
+    {
+        return mirror;
+    }
 }

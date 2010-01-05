@@ -29,10 +29,10 @@ public class DefaultStorageCompositeFileItem
 {
     private List<StorageItem> sources;
 
-    public DefaultStorageCompositeFileItem( Repository repository, ResourceStoreRequest request, boolean canRead,
-                                            boolean canWrite, ContentLocator contentLocator, List<StorageItem> sources )
+    public DefaultStorageCompositeFileItem( Repository repository, ResourceStoreRequest request,
+                                            ContentLocator contentLocator, List<StorageItem> sources )
     {
-        super( repository, request, canRead, canWrite, contentLocator );
+        super( repository, request, contentLocator );
 
         if ( sources != null )
         {
@@ -40,10 +40,10 @@ public class DefaultStorageCompositeFileItem
         }
     }
 
-    public DefaultStorageCompositeFileItem( RepositoryRouter router, ResourceStoreRequest request, boolean canRead,
-                                            boolean canWrite, ContentLocator contentLocator, List<StorageItem> sources )
+    public DefaultStorageCompositeFileItem( RepositoryRouter router, ResourceStoreRequest request,
+                                            ContentLocator contentLocator, List<StorageItem> sources )
     {
-        super( router, request, canRead, canWrite, contentLocator );
+        super( router, request, contentLocator );
 
         if ( sources != null )
         {
