@@ -19,6 +19,7 @@
 
   <properties>
     <enunciate.version>1.17</enunciate.version>
+    <wink.version>1.0-incubating</wink.version>
   </properties>
 
   <dependencies>
@@ -30,76 +31,40 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Enunciate runtime -->
     <dependency>
-      <groupId>org.codehaus.enunciate</groupId>
-      <artifactId>enunciate-rt</artifactId>
-      <version>${enunciate.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <artifactId>enunciate-jaxws-ri-rt</artifactId>
-          <groupId>org.codehaus.enunciate</groupId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.apache.wink</groupId>
+      <artifactId>wink-server</artifactId>
+      <version>${wink.version}</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.enunciate</groupId>
-      <artifactId>enunciate-jersey-rt</artifactId>
-      <version>${enunciate.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.apache.wink</groupId>
+      <artifactId>wink-webdav</artifactId>
+      <version>${wink.version}</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.wink</groupId>
+      <artifactId>wink-jackson-provider</artifactId>
+      <version>${wink.version}</version>
+      <scope>compile</scope>
     </dependency>
 
-    <!-- Enunciate deps -->
+    <!-- Annos we need -->
     <dependency>
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
-      <version>2.1</version>
+      <version>2.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>javax.ws.rs</groupId>
       <artifactId>jsr311-api</artifactId>
-      <version>1.0</version>
+      <version>1.1</version>
       <scope>compile</scope>
     </dependency>
 
-    <!-- Upgrading Jersey to 1.0.3.1 (from Enunciate's 1.0.3) -->
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-core</artifactId>
-      <version>1.0.3.1</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey</groupId>
-      <artifactId>jersey-server</artifactId>
-      <version>1.0.3.1</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.jersey.contribs</groupId>
-      <artifactId>jersey-guice</artifactId>
-      <version>1.0.3.1</version>
-      <scope>compile</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>provided</scope>
-    </dependency>
-    
-    <!-- Logging (needed by Enunciate RT) -->
+    <!-- Logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -177,11 +142,6 @@
             <artifactId>enunciate-docs</artifactId>
             <version>${enunciate.version}</version>
           </dependency>
-          <dependency>
-            <groupId>org.codehaus.enunciate</groupId>
-            <artifactId>enunciate-jersey</artifactId>
-            <version>${enunciate.version}</version>
-          </dependency>
         </dependencies>
         <configuration>
           <configFile>enunciate.xml</configFile>
@@ -211,7 +171,7 @@
         <groupId>org.mortbay.jetty</groupId>
         <artifactId>maven-jetty-plugin</artifactId>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>

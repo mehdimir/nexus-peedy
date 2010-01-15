@@ -20,16 +20,7 @@
     <jaxws-support disabled="true" />
     <jaxws-ri disabled="true" />
     <gwt disabled="true" />
-
-    <jaxws-client>
-      <package-conversions>
-        <convert from="org.sonatype.nexus.remote" to="org.sonatype.nexus.remote.client" />
-      </package-conversions>
-    </jaxws-client>
-
-    <jersey disabled="false" usePathBasedConneg="false">
-      <init-param name="org.codehaus.enunciate.modules.jersey.config.ResourceProviderFactory" value="org.sonatype.nexus.remote.plexus.PlexusComponentProviderFactory" />
-    </jersey>
+    <jersey disabled="true" />
 
     <docs disabled="false" title="Sonatype Nexus Remote API">
       <war docsDir="apidocs" />
